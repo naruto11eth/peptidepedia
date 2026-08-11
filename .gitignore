@@ -1,0 +1,13 @@
+node_modules/
+.next/
+out/
+.env
+.env.local
+*.tsbuildinfo
+next-env.d.ts
+.DS_Store
+
+# Local agent tooling, not part of the site
+.agents/
+.claude/
+skills-lock.json
