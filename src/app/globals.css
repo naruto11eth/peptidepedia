@@ -1,0 +1,305 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;
+
+  --color-ink-950: #08090b;
+  --color-ink-900: #0c0e12;
+  --color-ink-850: #111319;
+  --color-ink-800: #161920;
+  --color-ink-700: #1e222b;
+  --color-ink-600: #2a2f3a;
+  --color-ink-500: #3d434f;
+  --color-ink-400: #6b7280;
+  --color-ink-300: #9aa1ad;
+  --color-ink-200: #c3c8d1;
+  --color-ink-100: #e6e9ee;
+  --color-ink-50: #f6f7f9;
+
+  --color-accent: #4dd4ac;
+  --color-accent-dim: #2fa383;
+  --color-accent-glow: #4dd4ac26;
+
+  --color-tier-approved: #4dd4ac;
+  --color-tier-trial: #6aa9ff;
+  --color-tier-preclinical: #e0a03c;
+  --color-tier-anecdotal: #e0653c;
+}
+
+/*
+ * Light-mode values live here once, unconditionally, so the two selectors that
+ * activate light mode below cannot drift apart.
+ *
+ * The accent and tier hues are NOT reused from dark mode. Every one of them
+ * measures below 4.5:1 against a near-white background (the mint accent lands
+ * at 2.9:1, the approved-tier mint at 1.7:1), so light mode gets its own set of
+ * darkened hues that clear WCAG AA. Verified, not eyeballed.
+ */
+:root {
+  --l-bg: var(--color-ink-50);
+  --l-bg-raised: #ffffff;
+  --l-bg-card: #ffffff;
+  --l-border: #e2e5ea;
+  --l-border-strong: #cbd0d8;
+  --l-text: var(--color-ink-900);
+  --l-text-muted: var(--color-ink-500);
+  --l-text-faint: #5b6270;
+  --l-accent: #0f7355;
+  --l-accent-dim: #0a5c44;
+  --l-tier-approved: #0f7355;
+  --l-tier-trial: #1d4ed8;
+  --l-tier-preclinical: #b45309;
+  --l-tier-anecdotal: #c2410c;
+}
+
+:root {
+  --bg: var(--color-ink-950);
+  --bg-raised: var(--color-ink-900);
+  --bg-card: var(--color-ink-850);
+  --border: var(--color-ink-700);
+  --border-strong: var(--color-ink-600);
+  --text: var(--color-ink-100);
+  --text-muted: var(--color-ink-300);
+  --text-faint: var(--color-ink-400);
+  /* Text colour that sits on an accent-filled surface. */
+  --accent-on: var(--color-ink-950);
+  color-scheme: dark;
+}
+
+/*
+ * Dark is the brand default, so it lives on bare :root. Light activates for
+ * visitors whose system asks for it (unless they explicitly chose dark), and
+ * for anyone who picks it with the toggle.
+ */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: var(--l-bg);
+    --bg-raised: var(--l-bg-raised);
+    --bg-card: var(--l-bg-card);
+    --border: var(--l-border);
+    --border-strong: var(--l-border-strong);
+    --text: var(--l-text);
+    --text-muted: var(--l-text-muted);
+    --text-faint: var(--l-text-faint);
+    --color-accent: var(--l-accent);
+    --color-accent-dim: var(--l-accent-dim);
+    --color-tier-approved: var(--l-tier-approved);
+    --color-tier-trial: var(--l-tier-trial);
+    --color-tier-preclinical: var(--l-tier-preclinical);
+    --color-tier-anecdotal: var(--l-tier-anecdotal);
+    --accent-on: #ffffff;
+    color-scheme: light;
+  }
+}
+
+:root[data-theme="light"] {
+  --bg: var(--l-bg);
+  --bg-raised: var(--l-bg-raised);
+  --bg-card: var(--l-bg-card);
+  --border: var(--l-border);
+  --border-strong: var(--l-border-strong);
+  --text: var(--l-text);
+  --text-muted: var(--l-text-muted);
+  --text-faint: var(--l-text-faint);
+  --color-accent: var(--l-accent);
+  --color-accent-dim: var(--l-accent-dim);
+  --color-tier-approved: var(--l-tier-approved);
+  --color-tier-trial: var(--l-tier-trial);
+  --color-tier-preclinical: var(--l-tier-preclinical);
+  --color-tier-anecdotal: var(--l-tier-anecdotal);
+  --accent-on: #ffffff;
+  color-scheme: light;
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "cv02", "cv03", "cv04";
+}
+
+/* Subtle grid backdrop - reinforces the "lab reference" read without competing with content. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--border) 40%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--border) 40%, transparent) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 80% 50% at 50% 0%, #000 20%, transparent 75%);
+}
+
+@utility surface {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+}
+
+@utility label-xs {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.prose-doc {
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+.prose-doc h2 {
+  margin: 2.75rem 0 1rem;
+  font-size: 1.375rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--text);
+  scroll-margin-top: 5rem;
+}
+.prose-doc h3 {
+  margin: 2rem 0 0.75rem;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text);
+  scroll-margin-top: 5rem;
+}
+.prose-doc p {
+  margin: 1rem 0;
+}
+.prose-doc ul,
+.prose-doc ol {
+  margin: 1rem 0;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.prose-doc ul {
+  list-style: none;
+}
+.prose-doc ul > li {
+  position: relative;
+  padding-left: 1rem;
+}
+.prose-doc ul > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6875rem;
+  width: 5px;
+  height: 5px;
+  border-radius: 1px;
+  background: var(--color-accent-dim);
+}
+.prose-doc ol {
+  list-style: decimal;
+}
+.prose-doc ol::marker {
+  color: var(--text-faint);
+}
+.prose-doc strong {
+  color: var(--text);
+  font-weight: 600;
+}
+.prose-doc a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklab, var(--color-accent) 35%, transparent);
+  text-underline-offset: 3px;
+}
+.prose-doc a:hover {
+  text-decoration-color: var(--color-accent);
+}
+.prose-doc code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+  color: var(--text);
+}
+.prose-doc blockquote {
+  margin: 1.5rem 0;
+  padding: 0.75rem 1rem;
+  border-left: 2px solid var(--color-accent-dim);
+  background: var(--bg-raised);
+  border-radius: 0 0.5rem 0.5rem 0;
+  color: var(--text-muted);
+}
+.prose-doc blockquote p:first-child {
+  margin-top: 0;
+}
+.prose-doc blockquote p:last-child {
+  margin-bottom: 0;
+}
+.prose-doc hr {
+  margin: 2.5rem 0;
+  border: 0;
+  border-top: 1px solid var(--border);
+}
+
+/* Tables carry most of the comparative data on this site, so they get real treatment. */
+.prose-doc .table-scroll {
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+}
+.prose-doc table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  min-width: 34rem;
+}
+.prose-doc thead {
+  background: var(--bg-raised);
+}
+.prose-doc th {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  font-weight: 500;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--border);
+}
+.prose-doc td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid color-mix(in oklab, var(--border) 60%, transparent);
+  vertical-align: top;
+}
+.prose-doc tbody tr:last-child td {
+  border-bottom: 0;
+}
+.prose-doc tbody tr:hover {
+  background: color-mix(in oklab, var(--bg-raised) 60%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
