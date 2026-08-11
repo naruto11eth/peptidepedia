@@ -1,0 +1,107 @@
+---
+name: Retatrutide
+aka: ["LY3437943", "Reta", "GLP-3 (misnomer)"]
+tagline: Triple GLP-1 / GIP / glucagon agonist producing the largest weight loss recorded in any obesity trial to date. Investigational - not approved anywhere.
+class: incretin
+evidenceTier: trials
+regulatoryStatus: Investigational. Eli Lilly's phase 3 TRIUMPH programme is ongoing and no regulator has approved retatrutide for any indication. Everything sold online is research-chemical grade.
+goals: ["fat-loss", "longevity"]
+routes: ["subcutaneous"]
+cadence: weekly
+cadenceNote: The ~6-day half-life is what makes once-weekly dosing work. Same day each week; time of day does not matter.
+halfLife: "~6 days"
+reportedDose:
+  low: 1
+  high: 12
+  unit: mg
+  note: Trial doses ran 1-12 mg weekly with escalation every 4 weeks. Starting at 2 mg rather than 4 mg measurably reduced GI side effects.
+reconstitution:
+  vialMg: 10
+  bacWaterMl: 2
+  syringeUnits: 100
+storage: Lyophilised vials are stable refrigerated. Once reconstituted, refrigerate at 2-8 °C and use within roughly 4 weeks. Do not freeze after mixing.
+sideEffects:
+  - "Nausea - 14% at 1 mg rising to 60% at 12 mg in phase 2"
+  - "Vomiting, diarrhoea and constipation, concentrated during dose escalation"
+  - "Resting heart rate up ~4-6 bpm at the top dose, peaking near week 24 then declining"
+  - "Appetite suppression severe enough that under-eating protein becomes the real risk"
+  - "Fatigue and dizziness, usually tied to inadequate food and fluid intake"
+redFlags:
+  - "Vomiting that prevents keeping fluids down - dehydration is the most common reason people end up in an ER on incretins"
+  - "Severe, persistent abdominal pain radiating to the back - the classic pancreatitis presentation"
+  - "Resting heart rate persistently above ~100 bpm, or palpitations with chest pain"
+  - "Personal or family history of medullary thyroid carcinoma or MEN2 - a contraindication across the whole GLP-1 class"
+pairsWith: []
+cautionWith: ["tirzepatide", "semaglutide"]
+subreddits: ["Peptidesource", "PeptideForum", "Biohackers"]
+citations:
+  - label: "Jastreboff et al., Triple-Hormone-Receptor Agonist Retatrutide for Obesity - A Phase 2 Trial, NEJM 2023"
+    url: "https://www.nejm.org/doi/full/10.1056/NEJMoa2301972"
+    kind: trial
+  - label: "Phase 2 trial record (PubMed 37366315)"
+    url: "https://pubmed.ncbi.nlm.nih.gov/37366315/"
+    kind: trial
+  - label: "Eli Lilly - phase 2 results announcement"
+    url: "https://investor.lilly.com/news-releases/news-release-details/lillys-phase-2-retatrutide-results-published-new-england-journal"
+    kind: regulatory
+  - label: "Retatrutide for MASLD - randomised phase 2a trial"
+    url: "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11271400/"
+    kind: trial
+updated: "2026-08-12"
+featured: true
+---
+
+## What it is
+
+Retatrutide is a single synthetic peptide that activates three receptors at once: **GLP-1**, **GIP**, and **glucagon**. Semaglutide hits one of those. Tirzepatide hits two. Retatrutide adds glucagon receptor agonism on top - and that third arm is the interesting part, because glucagon raises energy expenditure rather than only suppressing intake.
+
+You will see it called "GLP-3" in forums and on vendor sites. **There is no such thing as GLP-3.** The name appears to have been invented by analogy - first-generation, second-generation, therefore third - and it stuck because it is easy to say. Retatrutide is a triple agonist, not a third GLP.
+
+## Mechanism
+
+Each receptor arm does something different, and the combination is why the weight-loss numbers separate from the rest of the class:
+
+- **GLP-1** - slows gastric emptying, increases satiety, improves glucose-dependent insulin secretion. This is the appetite lever.
+- **GIP** - potentiates insulin response and appears to improve tolerability of GLP-1 agonism, blunting nausea relative to GLP-1 alone.
+- **Glucagon** - increases resting energy expenditure and drives hepatic fat mobilisation. This is the arm that adds "burn more," not just "eat less."
+
+The glucagon arm is also the source of the class's open questions. Glucagon raises blood glucose in isolation; retatrutide's GLP-1 component offsets that, but the balance is dose-dependent, and it is why hepatic and glycaemic endpoints are watched closely in the phase 3 programme.
+
+## What the evidence shows
+
+The **phase 2 trial** (338 adults with obesity, 48 weeks, published in *NEJM* in 2023) is the foundational human dataset. Least-squares mean change in body weight at 48 weeks:
+
+| Arm | Mean weight change at 48 weeks |
+| --- | --- |
+| Placebo | −2.1% |
+| 1 mg | −8.7% |
+| 4 mg | −17.1% |
+| 8 mg | −22.8% |
+| **12 mg** | **−24.2%** |
+
+At 24 weeks the 12 mg arm was already at roughly −17.5%. Crucially, the curves had **not flattened** by week 48 - weight was still coming off when the trial ended, which is unusual and is a large part of why the compound attracted the attention it did.
+
+**Phase 3 (TRIUMPH programme)** readouts have since reported figures in the same territory - on the order of 28% mean reduction at 68-80 weeks in the higher-dose arms, the largest reported in any phase 3 obesity trial. Filing and approval timelines remain speculative; treat any specific date you read online as a guess.
+
+A separate **phase 2a trial in MASLD** (fatty liver disease) found substantial reductions in liver fat content, consistent with the glucagon-driven hepatic mechanism.
+
+**What is not established:** long-term safety beyond trial duration, effects of the years-long continuous use that real-world weight maintenance implies, and outcomes in anyone the trials excluded.
+
+## How it is dosed in trials
+
+Trial protocols started low and escalated every 4 weeks - 2 mg or 4 mg for the first four weeks, stepping up toward the target dose over roughly 12 weeks. The trial explicitly compared a 2 mg start against a 4 mg start and found **the lower start materially reduced GI adverse events**. This is the single most transferable finding in the dataset: escalation speed drives tolerability far more than the final dose does.
+
+Discontinuation due to adverse events ran 6-16% across retatrutide arms, versus zero on placebo.
+
+Use the [reconstitution calculator](/calculator?compound=retatrutide) to convert a vial into syringe units.
+
+## Practical notes
+
+- **Protein and resistance training are not optional.** Appetite suppression at these doses is profound, and weight lost without a protein floor and a lifting stimulus includes a meaningful fraction of lean mass. This is the most consistent regret reported across the entire GLP class.
+- **Hydration and electrolytes.** Most acute problems on incretins are dehydration wearing a costume.
+- **Do not stack with another incretin.** Retatrutide already covers GLP-1 and GIP. Adding tirzepatide or semaglutide on top adds side effects, not results.
+- **Sudden stops mean appetite returns.** Nothing about the drug rewires long-term set point on its own.
+
+## Sourcing reality
+
+Retatrutide has never been sold as a finished pharmaceutical product to anyone, anywhere. There is no legitimate consumer supply. Everything available is grey-market material labelled "not for human consumption," where identity, purity, sterility, and actual milligram content are unverified unless a third-party assay says otherwise - and vendor-supplied certificates are frequently recycled, stale, or for a different batch. See [safety and sourcing](/safety) for how to read a COA and what independent testing actually covers.
