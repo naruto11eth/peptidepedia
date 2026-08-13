@@ -1,9 +1,27 @@
 import type { Metadata } from "next";
+import { Archivo, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { THEME_INIT_SCRIPT } from "@/lib/theme";
+
+/* Wide grotesk for display: it reads institutional rather than editorial, which
+   is the register a drug reference should sit in. */
+const archivo = Archivo({
+  subsets: ["latin"],
+  variable: "--font-archivo",
+  weight: ["500", "600", "700"],
+  display: "swap",
+});
+
+const geist = Geist({ subsets: ["latin"], variable: "--font-geist", display: "swap" });
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://peptidepedia.example"),
@@ -22,7 +40,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${archivo.variable} ${geist.variable} ${geistMono.variable}`}
+    >
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
       </head>
