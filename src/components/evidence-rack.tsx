@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { FILL_BY_TIER, Vial } from "@/components/vial";
-import { EVIDENCE_TIER_META, type CompoundSummary } from "@/lib/schema";
+import { EVIDENCE_TIERS, EVIDENCE_TIER_META, type CompoundSummary } from "@/lib/schema";
 
 /**
  * The rack is the hero, the index, and the thesis in one object: every compound
@@ -16,6 +16,20 @@ export function EvidenceRack({ compounds }: { compounds: CompoundSummary[] }) {
       FILL_BY_TIER[b.evidenceTier] - FILL_BY_TIER[a.evidenceTier] ||
       a.name.localeCompare(b.name),
   );
+
+  const bands = EVIDENCE_TIERS.slice()
+    .sort((a, b) => EVIDENCE_TIER_META[b].rank - EVIDENCE_TIER_META[a].rank)
+    .map((tier) => ({
+      tier,
+      label: EVIDENCE_TIER_META[tier].short,
+      full: EVIDENCE_TIER_META[tier].label,
+      color: EVIDENCE_TIER_META[tier].color,
+      count: compounds.filter((c) => c.evidenceTier === tier).length,
+    }))
+    .filter((b) => b.count > 0)
+    // A band only one vial wide has no room for its label, and a truncated
+    // "ANECD..." is worse than none: the count and coloured rule still carry it.
+    .map((b) => ({ ...b, showLabel: b.count / compounds.length >= 0.12 }));
 
   return (
     <div className="relative">
@@ -64,7 +78,42 @@ export function EvidenceRack({ compounds }: { compounds: CompoundSummary[] }) {
 
       {/* The shelf: a lit edge plus the light that spills forward off it. */}
       <div className="h-px bg-gradient-to-r from-transparent via-[color-mix(in_oklab,var(--color-amber)_55%,transparent)] to-transparent" />
-      <div className="h-10 bg-gradient-to-b from-[color-mix(in_oklab,var(--color-amber)_9%,transparent)] to-transparent" />
+
+      {/*
+        The axis. Because the vials are equal-width and sorted by tier, a strip
+        of segments weighted by count lines up underneath them exactly, so the
+        scale labels itself and the rack stops needing a separate legend.
+      */}
+      <div className="flex gap-1 sm:gap-1.5 mt-2.5">
+        {bands.map((band) => (
+          <Link
+            key={band.tier}
+            href={`/compounds?tier=${band.tier}`}
+            className="group/band min-w-0 pt-2 border-t-2 transition-colors"
+            style={{
+              flexGrow: band.count,
+              flexBasis: 0,
+              borderColor: `color-mix(in oklab, ${band.color} 60%, transparent)`,
+            }}
+          >
+            <span className="flex items-baseline gap-1.5">
+              <span
+                className="font-display text-lg font-semibold tabular-nums leading-none"
+                style={{ color: band.color }}
+              >
+                {band.count}
+              </span>
+              {band.showLabel ? (
+                <span className="label-xs truncate group-hover/band:text-[var(--text-muted)] transition-colors">
+                  {band.label}
+                </span>
+              ) : (
+                <span className="sr-only">{band.full}</span>
+              )}
+            </span>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }
