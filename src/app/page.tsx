@@ -4,7 +4,7 @@ import Link from "next/link";
 import { EvidenceBadge } from "@/components/evidence-badge";
 import { EvidenceRack } from "@/components/evidence-rack";
 import { getRepository } from "@/lib/repository";
-import { EVIDENCE_TIERS, EVIDENCE_TIER_META } from "@/lib/schema";
+import { EVIDENCE_TIER_META } from "@/lib/schema";
 
 const TOOLS = [
   {
@@ -27,11 +27,20 @@ const TOOLS = [
 export default async function HomePage() {
   const repo = await getRepository();
   const compounds = await repo.summaries();
-  const [lead, ...rest] = compounds.filter((c) => c.featured);
-
-  const counts = Object.fromEntries(
-    EVIDENCE_TIERS.map((tier) => [tier, compounds.filter((c) => c.evidenceTier === tier).length]),
-  ) as Record<(typeof EVIDENCE_TIERS)[number], number>;
+  /*
+   * The lead card goes to the least-evidenced featured compound rather than
+   * whichever sorts first alphabetically. The gap between how much a compound
+   * is used and how much is known about it is the site's argument, so the entry
+   * that embodies it hardest deserves the largest tile.
+   */
+  const featured = compounds
+    .filter((c) => c.featured)
+    .sort(
+      (a, b) =>
+        EVIDENCE_TIER_META[a.evidenceTier].rank - EVIDENCE_TIER_META[b.evidenceTier].rank ||
+        a.name.localeCompare(b.name),
+    );
+  const [lead, ...rest] = featured;
 
   return (
     <>
@@ -81,34 +90,6 @@ export default async function HomePage() {
       </section>
 
       <section className="mx-auto max-w-6xl px-4 sm:px-6 mt-20 sm:mt-24">
-        <div className="border-t">
-          {EVIDENCE_TIERS.map((tier) => {
-            const meta = EVIDENCE_TIER_META[tier];
-            return (
-              <Link
-                key={tier}
-                href={`/compounds?tier=${tier}`}
-                className="group flex flex-col gap-2 border-b py-5 sm:flex-row sm:items-baseline sm:gap-8"
-              >
-                <span
-                  className="font-display text-3xl font-semibold tabular-nums leading-none w-12 shrink-0"
-                  style={{ color: meta.color }}
-                >
-                  {counts[tier]}
-                </span>
-                <span className="w-36 shrink-0">
-                  <EvidenceBadge tier={tier} size="xs" />
-                </span>
-                <span className="text-sm text-[var(--text-muted)] leading-relaxed max-w-2xl">
-                  {meta.description}
-                </span>
-              </Link>
-            );
-          })}
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-6xl px-4 sm:px-6 mt-20 sm:mt-24">
         <div className="flex items-baseline justify-between gap-4 mb-6">
           <h2 className="display text-2xl">Start here</h2>
           <Link
@@ -132,7 +113,12 @@ export default async function HomePage() {
                 <EvidenceBadge tier={lead.evidenceTier} size="xs" />
               </div>
               <p className="text-[var(--text-muted)] leading-relaxed">{lead.tagline}</p>
-              <span className="label-xs mt-auto pt-2">{lead.halfLife} half-life</span>
+              <span className="mt-auto pt-3 space-y-1">
+                <span className="label-xs block">Half-life</span>
+                <span className="block font-mono text-xs text-[var(--text-muted)]">
+                  {lead.halfLife}
+                </span>
+              </span>
             </Link>
           )}
 
