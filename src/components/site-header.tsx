@@ -26,7 +26,9 @@ export function SiteHeader() {
         <div className="flex h-16 items-center gap-6">
           <Link href="/" className="flex items-center gap-2.5 shrink-0 group">
             <Logo />
-            <span className="font-semibold tracking-tight text-[15px]">Peptidepedia</span>
+            <span className="font-display font-semibold tracking-tight text-[15px]">
+              Peptidepedia
+            </span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-1 ml-auto mr-1">

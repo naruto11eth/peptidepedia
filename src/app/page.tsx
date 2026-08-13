@@ -2,6 +2,7 @@ import { ArrowRightIcon } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 
 import { EvidenceBadge } from "@/components/evidence-badge";
+import { EvidenceRack } from "@/components/evidence-rack";
 import { getRepository } from "@/lib/repository";
 import { EVIDENCE_TIERS, EVIDENCE_TIER_META } from "@/lib/schema";
 
@@ -9,12 +10,12 @@ const TOOLS = [
   {
     href: "/calculator",
     title: "Reconstitution calculator",
-    body: "Vial size and bacteriostatic water into syringe units, with a live readout and warnings when a dose is too small to measure accurately.",
+    body: "Vial size and bacteriostatic water into syringe units, with warnings when a dose is too small to measure accurately.",
   },
   {
     href: "/compare",
     title: "Side-by-side compare",
-    body: "Up to four compounds against each other on evidence, regulatory status, half-life, cadence, dose and side effects.",
+    body: "Up to four compounds against each other on evidence, regulatory status, half-life, cadence and side effects.",
   },
   {
     href: "/stack",
@@ -34,16 +35,17 @@ export default async function HomePage() {
 
   return (
     <>
-      <section className="mx-auto max-w-6xl px-4 sm:px-6 pt-16 pb-16 sm:pt-24 sm:pb-20">
-        <p className="label-xs mb-5">
-          {compounds.length} compounds · every claim cited
-        </p>
-        <h1 className="text-4xl sm:text-6xl font-semibold tracking-tighter leading-[1.05] max-w-3xl">
-          What the evidence actually says about peptides.
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 pt-14 sm:pt-20">
+        <p className="label-xs mb-6">{compounds.length} compounds · every claim cited</p>
+        <h1 className="display text-[2.75rem] sm:text-7xl max-w-4xl text-[var(--color-powder)]">
+          Most of what you have read
+          <br />
+          about peptides is{" "}
+          <span className="text-[var(--color-accent)]">selling you something</span>.
         </h1>
-        <p className="mt-6 text-lg text-[var(--text-muted)] max-w-xl leading-relaxed">
-          Most of it is vendor copy in a lab coat. This separates human trials from mouse studies
-          from forum posts.
+        <p className="mt-7 text-lg text-[var(--text-muted)] max-w-xl leading-relaxed">
+          This is the other kind of page. Every entry is graded on how much human evidence actually
+          exists.
         </p>
 
         <div className="mt-9 flex flex-wrap gap-3">
@@ -57,14 +59,28 @@ export default async function HomePage() {
             href="/methodology"
             className="px-5 py-2.5 rounded-lg border text-sm hover:border-[var(--border-strong)] transition-colors"
           >
-            How the tiers work
+            How the grading works
           </Link>
         </div>
       </section>
 
-      {/* Legend rather than a card grid: these are one scale, and rendering them
-          as four separate tiles implied four unrelated categories. */}
-      <section className="mx-auto max-w-6xl px-4 sm:px-6 pb-20">
+      {/*
+        The rack does the arguing. Fill level is evidence, so the shape of the
+        row is the finding: a handful of full vials, then a long tail of nearly
+        empty ones.
+      */}
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 mt-10 sm:mt-12">
+        <EvidenceRack compounds={compounds} />
+        <div className="mt-4 flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2">
+          <p className="text-sm text-[var(--text-muted)] max-w-lg leading-relaxed">
+            Each vial is one compound. How full it is, is how much human evidence exists for the use
+            people take it for. Hover to name one.
+          </p>
+          <p className="label-xs">Strongest to weakest</p>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 mt-20 sm:mt-24">
         <div className="border-t">
           {EVIDENCE_TIERS.map((tier) => {
             const meta = EVIDENCE_TIER_META[tier];
@@ -75,7 +91,7 @@ export default async function HomePage() {
                 className="group flex flex-col gap-2 border-b py-5 sm:flex-row sm:items-baseline sm:gap-8"
               >
                 <span
-                  className="text-3xl font-semibold tabular-nums leading-none w-12 shrink-0"
+                  className="font-display text-3xl font-semibold tabular-nums leading-none w-12 shrink-0"
                   style={{ color: meta.color }}
                 >
                   {counts[tier]}
@@ -92,9 +108,9 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 sm:px-6 pb-20">
-        <div className="flex items-baseline justify-between gap-4 mb-5">
-          <h2 className="text-xl font-semibold tracking-tight">Start here</h2>
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 mt-20 sm:mt-24">
+        <div className="flex items-baseline justify-between gap-4 mb-6">
+          <h2 className="display text-2xl">Start here</h2>
           <Link
             href="/compounds"
             className="text-sm text-[var(--text-muted)] hover:text-[var(--text)]"
@@ -103,16 +119,14 @@ export default async function HomePage() {
           </Link>
         </div>
 
-        {/* Asymmetric: the lead compound carries the section, the rest support it.
-            Four equal tiles would read as four equally important entry points. */}
         <div className="grid gap-3 lg:grid-cols-3">
           {lead && (
             <Link
               href={`/compounds/${lead.slug}`}
-              className="surface p-6 lg:row-span-3 flex flex-col gap-4 hover:border-[var(--border-strong)] transition-colors group"
+              className="surface p-6 lg:row-span-3 flex flex-col gap-4 hover:border-[var(--border-strong)] transition-colors group relative overflow-hidden"
             >
               <div className="flex items-start justify-between gap-3">
-                <h3 className="text-2xl font-semibold tracking-tight group-hover:text-[var(--color-accent)] transition-colors">
+                <h3 className="display text-3xl group-hover:text-[var(--color-accent)] transition-colors">
                   {lead.name}
                 </h3>
                 <EvidenceBadge tier={lead.evidenceTier} size="xs" />
@@ -130,7 +144,7 @@ export default async function HomePage() {
                 className="surface p-5 flex flex-col gap-3 hover:border-[var(--border-strong)] transition-colors group"
               >
                 <div className="flex items-start justify-between gap-2">
-                  <h3 className="font-semibold tracking-tight group-hover:text-[var(--color-accent)] transition-colors">
+                  <h3 className="font-display font-semibold tracking-tight group-hover:text-[var(--color-accent)] transition-colors">
                     {c.name}
                   </h3>
                   <EvidenceBadge tier={c.evidenceTier} size="xs" />
@@ -144,14 +158,14 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 sm:px-6 pb-8">
-        <h2 className="text-xl font-semibold tracking-tight mb-5">Tools</h2>
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 mt-20 sm:mt-24 pb-8">
+        <h2 className="display text-2xl mb-6">Tools</h2>
         <div className="border-t">
           {TOOLS.map((tool) => (
             <Link
               key={tool.href}
               href={tool.href}
-              className="group flex items-start gap-5 border-b py-5 hover:bg-[var(--bg-raised)] transition-colors sm:px-2"
+              className="group flex items-start gap-5 border-b py-5 hover:bg-[color-mix(in_oklab,var(--bg-raised)_70%,transparent)] transition-colors sm:px-2"
             >
               <div className="min-w-0 flex-1">
                 <h3 className="font-medium group-hover:text-[var(--color-accent)] transition-colors">
