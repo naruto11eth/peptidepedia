@@ -4,6 +4,33 @@ import { FILL_BY_TIER, Vial } from "@/components/vial";
 import { EVIDENCE_TIERS, EVIDENCE_TIER_META, type CompoundSummary } from "@/lib/schema";
 
 /**
+ * Codes printed on each vial's label. Purely presentational, so they live here
+ * rather than in the content schema; anything unlisted falls back to the first
+ * five characters of the slug.
+ */
+const LABEL_CODES: Record<string, string> = {
+  retatrutide: "RETA",
+  tirzepatide: "TIRZ",
+  semaglutide: "SEMA",
+  cagrilintide: "CAGRI",
+  tesamorelin: "TESA",
+  ipamorelin: "IPA",
+  "cjc-1295": "CJC",
+  "mots-c": "MOTS",
+  "bpc-157": "BPC",
+  "tb-500": "TB500",
+  kpv: "KPV",
+  "ghk-cu": "GHK",
+  "nad-plus": "NAD+",
+  enclomiphene: "ENCLO",
+  tadalafil: "TADA",
+  vardenafil: "VARD",
+};
+
+const codeFor = (slug: string) =>
+  LABEL_CODES[slug] ?? slug.replace(/[^a-z0-9]/gi, "").slice(0, 5).toUpperCase();
+
+/**
  * The rack is the hero, the index, and the thesis in one object: every compound
  * in the reference, drawn as a vial whose fill is how much human evidence
  * actually exists. It is a chart that happens to look like a shelf.
@@ -55,6 +82,7 @@ export function EvidenceRack({ compounds }: { compounds: CompoundSummary[] }) {
                 <Vial
                   id={`rack-${c.slug}`}
                   level={level}
+                  label={codeFor(c.slug)}
                   className="vial relative w-full h-auto transition-transform duration-300 ease-out group-hover/vial:-translate-y-2"
                 />
                 <span className="sr-only">

@@ -28,12 +28,15 @@ const BODY_HEIGHT = BODY_BOTTOM - BODY_TOP;
 export function Vial({
   id,
   level,
+  label,
   className,
   style,
 }: {
   /** Must be unique per page: SVG gradient ids are global. */
   id: string;
   level: number;
+  /** Short code printed on the vial's paper label. */
+  label?: string;
   className?: string;
   style?: React.CSSProperties;
 }) {
@@ -81,16 +84,15 @@ export function Vial({
       </defs>
 
       {/* Aluminium crimp cap */}
-      <rect x="14" y="4" width="20" height="12" rx="1.5" fill={`url(#${id}-cap)`} />
+      <rect x="11" y="4" width="26" height="12" rx="1.5" fill={`url(#${id}-cap)`} />
       {/* Flip-off centre: the detail that makes it read pharmaceutical */}
-      <ellipse cx="24" cy="5.4" rx="6.5" ry="1.9" fill="var(--color-amber-deep)" opacity="0.85" />
-      <ellipse cx="24" cy="5" rx="6.5" ry="1.9" fill="var(--color-amber)" />
-      <rect x="14" y="12.5" width="20" height="0.9" fill="#000" opacity="0.25" />
+      <ellipse cx="24" cy="5.4" rx="8.5" ry="2.1" fill="var(--color-amber-deep)" opacity="0.85" />
+      <ellipse cx="24" cy="5" rx="8.5" ry="2.1" fill="var(--color-amber)" />
+      <rect x="11" y="12.5" width="26" height="0.9" fill="#000" opacity="0.25" />
 
       {/* Neck and shoulder */}
       <path
         d={`M17 16 h14 v6 l${(BODY_W - 14) / 2} 8 v2 H${BODY_X} v-2 l${(BODY_W - 14) / 2} -8 z`}
-        transform="translate(-3.5 0)"
         fill={`url(#${id}-glass)`}
         stroke="var(--color-amber-deep)"
         strokeOpacity="0.35"
@@ -131,6 +133,31 @@ export function Vial({
           />
         )}
       </g>
+
+      {/*
+        Paper label. Sits at y 64-79, which is deliberately clear of every
+        tier's fill line (37.2 / 58.8 / 84 / 96.2), so it never covers the one
+        thing the vial is meant to communicate.
+      */}
+      {label && (
+        <g>
+          <rect x="9" y="64" width="30" height="15" rx="1.2" fill="#f2eee4" opacity="0.94" />
+          <rect x="9" y="64" width="30" height="1" fill="#ffffff" opacity="0.5" />
+          <rect x="9" y="78" width="30" height="1" fill="#0d121c" opacity="0.16" />
+          <text
+            x="24"
+            y="74.4"
+            textAnchor="middle"
+            fontSize="7.6"
+            fontFamily="var(--font-mono)"
+            fontWeight="600"
+            letterSpacing="0.2"
+            fill="#141a24"
+          >
+            {label}
+          </text>
+        </g>
+      )}
 
       {/* Specular highlights: the stripes that make glass read as glass. */}
       <rect x="10.5" y="34" width="3" height={BODY_HEIGHT - 14} rx="1.5" fill="#fff" opacity="0.18" />
