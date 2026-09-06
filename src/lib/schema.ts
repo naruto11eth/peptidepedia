@@ -60,6 +60,7 @@ export const GOALS = [
   "hormones",
   "cognition",
   "endurance",
+  "immunity",
 ] as const;
 export type Goal = (typeof GOALS)[number];
 
@@ -76,6 +77,7 @@ export const GOAL_LABELS: Record<Goal, string> = {
   hormones: "Hormones",
   cognition: "Cognition",
   endurance: "Endurance",
+  immunity: "Immunity",
 };
 
 export const CLASSES = [
@@ -87,6 +89,10 @@ export const CLASSES = [
   "hormonal",
   "pde5",
   "cofactor",
+  "melanocortin",
+  "nootropic",
+  "immune",
+  "longevity",
 ] as const;
 export type CompoundClass = (typeof CLASSES)[number];
 
@@ -99,6 +105,10 @@ export const CLASS_LABELS: Record<CompoundClass, string> = {
   hormonal: "Hormonal",
   pde5: "PDE5 inhibitor",
   cofactor: "Metabolic cofactor",
+  melanocortin: "Melanocortin agonist",
+  nootropic: "Nootropic",
+  immune: "Immune modulator",
+  longevity: "Longevity",
 };
 
 export const ROUTES = ["subcutaneous", "intramuscular", "oral", "topical", "intranasal"] as const;
