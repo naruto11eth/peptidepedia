@@ -51,23 +51,6 @@
 }
 
 :root {
-  --l-bg: #f4f6f9;
-  --l-bg-raised: #ffffff;
-  --l-bg-card: #ffffff;
-  --l-border: #dfe4ec;
-  --l-border-strong: #c3cbd8;
-  --l-text: #0d121c;
-  --l-text-muted: #46536a;
-  --l-text-faint: #5c687d;
-  --l-accent: #8a5510;
-  --l-accent-dim: #6d420a;
-  --l-tier-approved: #0f7355;
-  --l-tier-trial: #1d4ed8;
-  --l-tier-preclinical: #4c5766;
-  --l-tier-anecdotal: #b23a22;
-}
-
-:root {
   --bg: var(--color-ink-950);
   --bg-raised: var(--color-ink-900);
   --bg-card: var(--color-ink-850);
@@ -89,52 +72,6 @@
     radial-gradient(56% 30% at 78% 2%, rgb(255 201 120 / 0.11) 0%, transparent 62%),
     radial-gradient(120% 60% at 50% 42%, rgb(90 130 200 / 0.05) 0%, transparent 70%);
   color-scheme: dark;
-}
-
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme="dark"]) {
-    --bg: var(--l-bg);
-    --bg-raised: var(--l-bg-raised);
-    --bg-card: var(--l-bg-card);
-    --border: var(--l-border);
-    --border-strong: var(--l-border-strong);
-    --text: var(--l-text);
-    --text-muted: var(--l-text-muted);
-    --text-faint: var(--l-text-faint);
-    --color-accent: var(--l-accent);
-    --color-accent-dim: var(--l-accent-dim);
-    --color-tier-approved: var(--l-tier-approved);
-    --color-tier-trial: var(--l-tier-trial);
-    --color-tier-preclinical: var(--l-tier-preclinical);
-    --color-tier-anecdotal: var(--l-tier-anecdotal);
-    --accent-on: #ffffff;
-    --hero-edge: #05070c;
-    --color-amber-deep: #8a5510;
-    --lamp: none;
-    color-scheme: light;
-  }
-}
-
-:root[data-theme="light"] {
-  --bg: var(--l-bg);
-  --bg-raised: var(--l-bg-raised);
-  --bg-card: var(--l-bg-card);
-  --border: var(--l-border);
-  --border-strong: var(--l-border-strong);
-  --text: var(--l-text);
-  --text-muted: var(--l-text-muted);
-  --text-faint: var(--l-text-faint);
-  --color-accent: var(--l-accent);
-  --color-accent-dim: var(--l-accent-dim);
-  --color-tier-approved: var(--l-tier-approved);
-  --color-tier-trial: var(--l-tier-trial);
-  --color-tier-preclinical: var(--l-tier-preclinical);
-  --color-tier-anecdotal: var(--l-tier-anecdotal);
-  --accent-on: #ffffff;
-  --hero-edge: #05070c;
-  --color-amber-deep: #8a5510;
-  --lamp: none;
-  color-scheme: light;
 }
 
 * {
@@ -342,6 +279,17 @@ body {
 }
 .prose-doc tbody tr:hover {
   background: color-mix(in oklab, var(--bg-raised) 60%, transparent);
+}
+
+/*
+ * Viewport and motion gating for the hero clip. Done in CSS rather than JS so
+ * the <video> is always present in the server HTML: the poster underneath it
+ * shows through whenever the video is hidden.
+ */
+@media (max-width: 767px), (prefers-reduced-motion: reduce) {
+  .hero-video {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
