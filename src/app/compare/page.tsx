@@ -59,7 +59,7 @@ export default async function ComparePage() {
                 <td>GLP-1</td>
                 <td>STEP-1</td>
                 <td>68 wk</td>
-                <td>~−14.9%</td>
+                <td>~-14.9%</td>
                 <td>Approved</td>
               </tr>
               <tr>
@@ -67,7 +67,7 @@ export default async function ComparePage() {
                 <td>GLP-1 + GIP</td>
                 <td>SURMOUNT-1</td>
                 <td>72 wk</td>
-                <td>~−20.9%</td>
+                <td>~-20.9%</td>
                 <td>Approved</td>
               </tr>
               <tr>
@@ -75,7 +75,7 @@ export default async function ComparePage() {
                 <td>GLP-1 + GIP + glucagon</td>
                 <td>Phase 2</td>
                 <td>48 wk</td>
-                <td>~−24.2%</td>
+                <td>~-24.2%</td>
                 <td>Investigational</td>
               </tr>
             </tbody>
