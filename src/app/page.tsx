@@ -41,7 +41,6 @@ export default async function HomePage() {
         EVIDENCE_TIER_META[a.evidenceTier].rank - EVIDENCE_TIER_META[b.evidenceTier].rank ||
         a.name.localeCompare(b.name),
     );
-  const [lead, ...rest] = featured;
 
   return (
     <>
@@ -108,47 +107,30 @@ export default async function HomePage() {
           </Link>
         </div>
 
-        <div className="grid gap-3 lg:grid-cols-3">
-          {lead && (
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {featured.map((c) => (
             <Link
-              href={`/compounds/${lead.slug}`}
-              className="surface p-6 lg:row-span-3 flex flex-col gap-4 hover:border-[var(--border-strong)] transition-colors group relative overflow-hidden"
+              key={c.slug}
+              href={`/compounds/${c.slug}`}
+              className="surface group flex min-w-0 flex-col gap-3 p-5 transition-colors hover:border-[var(--border-strong)]"
             >
-              <div className="flex items-start justify-between gap-3">
-                <h3 className="display text-3xl group-hover:text-[var(--color-accent)] transition-colors">
-                  {lead.name}
+              <div className="flex min-w-0 items-start justify-between gap-2">
+                <h3 className="font-display font-semibold tracking-tight transition-colors group-hover:text-[var(--color-accent)]">
+                  {c.name}
                 </h3>
-                <EvidenceBadge tier={lead.evidenceTier} size="xs" />
+                <EvidenceBadge tier={c.evidenceTier} size="xs" />
               </div>
-              <p className="text-[var(--text-muted)] leading-relaxed">{lead.tagline}</p>
-              <span className="mt-auto pt-3 space-y-1">
+              <p className="text-sm leading-relaxed text-[var(--text-muted)] line-clamp-5">
+                {c.tagline}
+              </p>
+              <span className="mt-auto space-y-1 pt-2">
                 <span className="label-xs block">Half-life</span>
                 <span className="block font-mono text-xs text-[var(--text-muted)]">
-                  {lead.halfLife}
+                  {c.halfLife}
                 </span>
               </span>
             </Link>
-          )}
-
-          <div className="lg:col-span-2 grid gap-3 sm:grid-cols-3">
-            {rest.map((c) => (
-              <Link
-                key={c.slug}
-                href={`/compounds/${c.slug}`}
-                className="surface p-5 flex flex-col gap-3 hover:border-[var(--border-strong)] transition-colors group"
-              >
-                <div className="flex items-start justify-between gap-2">
-                  <h3 className="font-display font-semibold tracking-tight group-hover:text-[var(--color-accent)] transition-colors">
-                    {c.name}
-                  </h3>
-                  <EvidenceBadge tier={c.evidenceTier} size="xs" />
-                </div>
-                <p className="text-sm text-[var(--text-muted)] leading-relaxed line-clamp-4">
-                  {c.tagline}
-                </p>
-              </Link>
-            ))}
-          </div>
+          ))}
         </div>
       </section>
 
