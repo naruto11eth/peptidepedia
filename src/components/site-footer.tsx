@@ -20,9 +20,20 @@ export function SiteFooter() {
 
         <div className="flex flex-col sm:flex-row gap-6 sm:items-end sm:justify-between">
           <div className="space-y-1">
-            <p className="font-semibold tracking-tight">Peptidepedia</p>
+            <p className="font-display font-semibold tracking-tight">Peptidepedia</p>
             <p className="text-sm text-[var(--text-faint)]">
               Evidence-tiered. Cited. Updated when the data changes.
+            </p>
+            <p className="pt-2 text-sm text-[var(--text-faint)]">
+              Made with curiosity by{" "}
+              <a
+                href="https://x.com/naruto11eth"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[var(--text-muted)] underline decoration-[color-mix(in_oklab,var(--color-accent)_45%,transparent)] underline-offset-4 transition-colors hover:text-[var(--color-accent)] hover:decoration-[var(--color-accent)]"
+              >
+                naruto11eth
+              </a>
             </p>
           </div>
           <nav className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-[var(--text-muted)]">
