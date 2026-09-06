@@ -3,8 +3,8 @@ import Link from "next/link";
 export function SiteFooter() {
   return (
     <footer className="border-t mt-24">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 py-10 space-y-8">
-        <div className="surface p-5 sm:p-6">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 py-14 sm:py-20 space-y-10">
+        <div className="surface px-5 py-8 sm:px-8 sm:py-10">
           <p className="label-xs mb-3">Read this first</p>
           <p className="text-sm leading-relaxed text-[var(--text-muted)]">
             Peptidepedia is a reference, not medical advice, and nothing here is a recommendation to
