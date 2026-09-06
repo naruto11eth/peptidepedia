@@ -6,7 +6,7 @@ import { HeroVideoPlayback } from "@/components/hero-video-playback";
  * The looping vial carousel behind the hero.
  *
  * This renders on the server with no JavaScript gate. An earlier version mounted
- * the <video> only after hydration, once a matchMedia check passed — which meant
+ * the <video> only after hydration, once a matchMedia check passed, which meant
  * anything that interfered with hydration left the hero as a bare poster with no
  * error to show for it. Viewport and reduced-motion are now handled in CSS, so
  * the element is always in the HTML and its visibility is not conditional on JS
