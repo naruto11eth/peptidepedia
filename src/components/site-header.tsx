@@ -5,9 +5,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
-import { ThemeToggle } from "@/components/theme-toggle";
 
 const NAV = [
+  { href: "/", label: "Home" },
   { href: "/compounds", label: "Compounds" },
   { href: "/compare", label: "Compare" },
   { href: "/calculator", label: "Calculator" },
@@ -26,12 +26,17 @@ export function SiteHeader() {
         <div className="flex h-16 items-center gap-6">
           <Link href="/" className="flex items-center gap-2.5 shrink-0 group">
             <Logo />
-            <span className="font-semibold tracking-tight text-[15px]">Peptidepedia</span>
+            <span className="font-display font-semibold tracking-tight text-[15px]">
+              Peptidepedia
+            </span>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-1 ml-auto mr-1">
+          <nav className="hidden lg:flex items-center gap-1 ml-auto mr-1">
             {NAV.map((item) => {
-              const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
+              const active =
+                item.href === "/"
+                  ? pathname === "/"
+                  : pathname === item.href || pathname.startsWith(`${item.href}/`);
               return (
                 <Link
                   key={item.href}
@@ -48,14 +53,13 @@ export function SiteHeader() {
             })}
           </nav>
 
-          <div className="flex items-center gap-1 ml-auto md:ml-0">
-            <ThemeToggle />
+          <div className="flex items-center gap-1 ml-auto lg:ml-0">
             <button
               type="button"
               onClick={() => setOpen((v) => !v)}
               aria-expanded={open}
               aria-label="Toggle navigation"
-              className="md:hidden p-2 -mr-2 rounded-md text-[var(--text-muted)] hover:text-[var(--text)]"
+              className="lg:hidden p-2 -mr-2 rounded-md text-[var(--text-muted)] hover:text-[var(--text)]"
             >
               {open ? <XIcon size={20} weight="bold" /> : <ListIcon size={20} weight="bold" />}
             </button>
@@ -63,7 +67,7 @@ export function SiteHeader() {
         </div>
 
         {open && (
-          <nav className="md:hidden pb-4 flex flex-col gap-0.5">
+          <nav className="lg:hidden pb-4 flex flex-col gap-0.5">
             {NAV.map((item) => (
               <Link
                 key={item.href}

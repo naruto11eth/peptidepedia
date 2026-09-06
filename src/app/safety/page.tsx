@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { PageHeader } from "@/components/page-header";
+import { ArticleLayout, type ArticleSection } from "@/components/article-layout";
 import { SUBREDDIT_DIRECTORY } from "@/lib/reddit";
 
 export const metadata: Metadata = {
@@ -9,17 +9,24 @@ export const metadata: Metadata = {
     "What 'not for human consumption' actually means, how to read a certificate of analysis, and the failure modes that send people to hospital.",
 };
 
+const SECTIONS: readonly ArticleSection[] = [
+  { id: "not-for-human-consumption", label: "Not for human consumption" },
+  { id: "certificate-of-analysis", label: "Certificates of analysis" },
+  { id: "evaluate-a-supplier", label: "Evaluating a supplier" },
+  { id: "failure-modes", label: "Failure modes that hurt people" },
+  { id: "tell-your-doctor", label: "Tell your doctor" },
+  { id: "communities", label: "Where people talk about this" },
+];
+
 export default function SafetyPage() {
   return (
-    <div className="mx-auto max-w-6xl px-4 sm:px-6 py-12 sm:py-16">
-      <PageHeader
-        eyebrow="Reference"
-        title="Safety & sourcing"
-        description="The parts nobody selling you peptides has an incentive to explain."
-      />
-
-      <div className="prose-doc max-w-2xl">
-        <h2>&ldquo;Not for human consumption&rdquo; is a legal position, not a finding</h2>
+    <ArticleLayout
+      eyebrow="Reference"
+      title="Safety & sourcing"
+      description={"The parts nobody selling you peptides has an incentive to explain."}
+      sections={SECTIONS}
+    >
+        <h2 id="not-for-human-consumption">&ldquo;Not for human consumption&rdquo; is a legal position, not a finding</h2>
         <p>
           Almost every peptide sold online carries a research-use-only label. It is easy to read that
           as a formality - a wink, a liability shield. It is a liability shield. It is also an
@@ -38,7 +45,7 @@ export default function SafetyPage() {
           change what the product is; it changes who is liable when it goes wrong.
         </p>
 
-        <h2>What a certificate of analysis does and does not tell you</h2>
+        <h2 id="certificate-of-analysis">What a certificate of analysis does and does not tell you</h2>
         <p>
           A COA is the main quality signal available in this market, and it is routinely
           misunderstood. A typical peptide COA reports:
@@ -75,7 +82,7 @@ export default function SafetyPage() {
           </li>
         </ul>
 
-        <h2>How to actually evaluate a supplier</h2>
+        <h2 id="evaluate-a-supplier">How to actually evaluate a supplier</h2>
         <ul>
           <li>
             <strong>Third-party, batch-specific testing</strong> - an independent lab, a batch number
@@ -98,7 +105,7 @@ export default function SafetyPage() {
           </li>
         </ul>
 
-        <h2>The failure modes that actually hurt people</h2>
+        <h2 id="failure-modes">The failure modes that actually hurt people</h2>
         <p>
           Ranked roughly by how often they cause real harm, which is not the order most people worry
           about them:
@@ -129,7 +136,7 @@ export default function SafetyPage() {
           </li>
         </ol>
 
-        <h2>Tell your doctor</h2>
+        <h2 id="tell-your-doctor">Tell your doctor</h2>
         <p>
           The most common reason people do not is expecting judgement. A clinician cannot help you
           with an interaction, an abnormal lab, or a symptom they do not know the cause of - and
@@ -143,7 +150,7 @@ export default function SafetyPage() {
           Without a baseline you cannot tell a change from a coincidence.
         </p>
 
-        <h2>Where people talk about this</h2>
+        <h2 id="communities">Where people talk about this</h2>
         <p>
           Community discussion is genuinely useful for practical logistics and vendor reputation, and
           genuinely unreliable for anything pharmacological. Sizes below were verified against public
@@ -182,7 +189,6 @@ export default function SafetyPage() {
           The large silent majority for whom nothing much happened does not generate threads, so
           forums systematically overstate both benefit and harm.
         </p>
-      </div>
-    </div>
+    </ArticleLayout>
   );
 }

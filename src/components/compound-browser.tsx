@@ -198,9 +198,9 @@ function CompoundCard({ compound }: { compound: CompoundSummary }) {
   return (
     <Link
       href={`/compounds/${compound.slug}`}
-      className="surface p-4 flex flex-col gap-3 hover:border-[var(--border-strong)] transition-colors group"
+      className="surface min-w-0 p-4 flex flex-col gap-3 hover:border-[var(--border-strong)] transition-colors group"
     >
-      <div className="flex items-start justify-between gap-3">
+      <div className="flex min-w-0 items-start justify-between gap-3">
         <div className="min-w-0">
           <h3 className="font-semibold tracking-tight group-hover:text-[var(--color-accent)] transition-colors">
             {compound.name}
