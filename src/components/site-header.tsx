@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
-import { ThemeToggle } from "@/components/theme-toggle";
 
 const NAV = [
   { href: "/", label: "Home" },
@@ -55,7 +54,6 @@ export function SiteHeader() {
           </nav>
 
           <div className="flex items-center gap-1 ml-auto lg:ml-0">
-            <ThemeToggle />
             <button
               type="button"
               onClick={() => setOpen((v) => !v)}

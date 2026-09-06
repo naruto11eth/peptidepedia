@@ -4,7 +4,6 @@ import "./globals.css";
 
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { THEME_INIT_SCRIPT } from "@/lib/theme";
 
 /* Wide grotesk for display: it reads institutional rather than editorial, which
    is the register a drug reference should sit in. */
@@ -53,12 +52,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      suppressHydrationWarning
       className={`${archivo.variable} ${geist.variable} ${geistMono.variable}`}
     >
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
-      </head>
       <body className="min-h-dvh flex flex-col">
         <SiteHeader />
         <main className="flex-1">{children}</main>
