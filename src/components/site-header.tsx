@@ -32,7 +32,7 @@ export function SiteHeader() {
             </span>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-1 ml-auto mr-1">
+          <nav className="hidden lg:flex items-center gap-1 ml-auto mr-1">
             {NAV.map((item) => {
               const active =
                 item.href === "/"
@@ -54,14 +54,14 @@ export function SiteHeader() {
             })}
           </nav>
 
-          <div className="flex items-center gap-1 ml-auto md:ml-0">
+          <div className="flex items-center gap-1 ml-auto lg:ml-0">
             <ThemeToggle />
             <button
               type="button"
               onClick={() => setOpen((v) => !v)}
               aria-expanded={open}
               aria-label="Toggle navigation"
-              className="md:hidden p-2 -mr-2 rounded-md text-[var(--text-muted)] hover:text-[var(--text)]"
+              className="lg:hidden p-2 -mr-2 rounded-md text-[var(--text-muted)] hover:text-[var(--text)]"
             >
               {open ? <XIcon size={20} weight="bold" /> : <ListIcon size={20} weight="bold" />}
             </button>
@@ -69,7 +69,7 @@ export function SiteHeader() {
         </div>
 
         {open && (
-          <nav className="md:hidden pb-4 flex flex-col gap-0.5">
+          <nav className="lg:hidden pb-4 flex flex-col gap-0.5">
             {NAV.map((item) => (
               <Link
                 key={item.href}
