@@ -1,25 +1,21 @@
-"use client";
-
 import Image from "next/image";
 
-import { useMediaQuery } from "@/lib/use-media-query";
+import { HeroVideoPlayback } from "@/components/hero-video-playback";
 
 /**
  * The looping vial carousel behind the hero.
  *
- * The poster is always rendered and is what LCP measures, so the video never
- * sits on the critical path. The <video> itself mounts only on a wide viewport
- * with motion allowed, which means phones and reduced-motion readers never
- * request the file at all.
+ * This renders on the server with no JavaScript gate. An earlier version mounted
+ * the <video> only after hydration, once a matchMedia check passed — which meant
+ * anything that interfered with hydration left the hero as a bare poster with no
+ * error to show for it. Viewport and reduced-motion are now handled in CSS, so
+ * the element is always in the HTML and its visibility is not conditional on JS
+ * running at all.
  *
- * The source clip is deliberately composed with an empty centre (measured at
- * luma 5/255) for type to sit in.
+ * mp4 is listed before webm on purpose: Safari's VP9 support is unreliable, and
+ * it can select a webm source it then fails to paint.
  */
 export function HeroVideo() {
-  const wide = useMediaQuery("(min-width: 768px)");
-  const reducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
-  const play = wide && !reducedMotion;
-
   return (
     <div className="absolute inset-0 overflow-hidden" aria-hidden>
       <Image
@@ -28,42 +24,39 @@ export function HeroVideo() {
         fill
         priority
         sizes="100vw"
-        className="object-cover scale-[1.02] object-center"
+        className="object-cover object-center scale-[1.02]"
       />
 
-      {play && (
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="none"
-          poster="/hero/vials-poster.webp"
-          className="absolute inset-0 h-full w-full object-cover scale-[1.02] object-center"
-        >
-          <source src="/hero/vials-loop.webm" type="video/webm" />
-          <source src="/hero/vials-loop.mp4" type="video/mp4" />
-        </video>
-      )}
+      <video
+        className="hero-video absolute inset-0 h-full w-full object-cover object-center scale-[1.02]"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        poster="/hero/vials-poster.webp"
+      >
+        <source src="/hero/vials-loop.mp4" type="video/mp4" />
+        <source src="/hero/vials-loop.webm" type="video/webm" />
+      </video>
 
-      {/* Pool of darkness under the type. The ring's hole is already near-black,
-          but this lets the headline breathe past its inner edge safely. */}
+      <HeroVideoPlayback />
+
       <div
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(closest-side at 50% 48%, rgb(5 7 12 / 0.92) 0%, rgb(5 7 12 / 0.78) 42%, rgb(5 7 12 / 0.25) 72%, transparent 100%)",
+            "radial-gradient(closest-side at 50% 48%, rgb(9 12 11 / 0.92) 0%, rgb(9 12 11 / 0.78) 42%, rgb(9 12 11 / 0.25) 72%, transparent 100%)",
         }}
       />
-      {/* Feather the frame edges. This fades to the clip's own black rather
-          than to the page background: in dark mode they match, and in light
-          mode it keeps the hero a deliberate dark panel instead of a dark
-          rectangle sitting in a white halo. */}
+      {/* Feathered on all four edges. The top ramp is a cool near-black rather
+          than the warm lamp colour: the amber ground bleeding through here read
+          as an orange stripe under the nav. */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(to bottom, var(--hero-edge) 0%, transparent 18%, transparent 62%, var(--hero-edge) 100%), linear-gradient(to right, var(--hero-edge) 0%, transparent 14%, transparent 86%, var(--hero-edge) 100%)",
+            "linear-gradient(to bottom, var(--hero-edge) 0%, rgb(9 12 11 / 0.55) 6%, transparent 22%, transparent 58%, var(--hero-edge) 100%), linear-gradient(to right, var(--hero-edge) 0%, transparent 14%, transparent 86%, var(--hero-edge) 100%)",
         }}
       />
     </div>
