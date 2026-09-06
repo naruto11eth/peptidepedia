@@ -83,13 +83,6 @@ export function Vial({
         </clipPath>
       </defs>
 
-      {/* Aluminium crimp cap */}
-      <rect x="11" y="4" width="26" height="12" rx="1.5" fill={`url(#${id}-cap)`} />
-      {/* Flip-off centre: the detail that makes it read pharmaceutical */}
-      <ellipse cx="24" cy="5.4" rx="8.5" ry="2.1" fill="var(--color-amber-deep)" opacity="0.85" />
-      <ellipse cx="24" cy="5" rx="8.5" ry="2.1" fill="var(--color-amber)" />
-      <rect x="11" y="12.5" width="26" height="0.9" fill="#000" opacity="0.25" />
-
       {/* Neck and shoulder */}
       <path
         d={`M17 16 h14 v6 l${(BODY_W - 14) / 2} 8 v2 H${BODY_X} v-2 l${(BODY_W - 14) / 2} -8 z`}
@@ -98,6 +91,19 @@ export function Vial({
         strokeOpacity="0.35"
         strokeWidth="0.6"
       />
+
+      {/*
+        Aluminium crimp cap. Drawn after the neck and overlapping it by 2 units,
+        because a real crimp is skirted metal folded down over the neck flange,
+        not a lid resting on top. A shallow cap was the main reason this read as
+        a bottle rather than a vial.
+      */}
+      <rect x="11" y="2" width="26" height="16" rx="1.5" fill={`url(#${id}-cap)`} />
+      <rect x="11" y="13.6" width="26" height="0.8" fill="#000" opacity="0.28" />
+      <rect x="11" y="15.6" width="26" height="0.8" fill="#000" opacity="0.2" />
+      {/* Flip-off centre: the detail that makes it read pharmaceutical */}
+      <ellipse cx="24" cy="4.4" rx="8.5" ry="2.2" fill="var(--color-amber-deep)" opacity="0.85" />
+      <ellipse cx="24" cy="3.9" rx="8.5" ry="2.2" fill="var(--color-amber)" />
 
       {/* Body */}
       <rect
