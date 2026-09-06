@@ -49,7 +49,7 @@ export default async function HomePage() {
         type sits inside the ring rather than beside it. Height is tied to the
         16:9 source so the hole stays centred as the viewport widens.
       */}
-      <section className="relative isolate mt-3 flex min-h-[clamp(32rem,56vw,48rem)] items-center justify-center overflow-hidden py-16 sm:mt-4 sm:py-20">
+      <section className="relative isolate flex min-h-[clamp(32rem,56vw,48rem)] items-center justify-center overflow-hidden py-16 sm:py-20">
         <HeroVideo />
 
         <div className="relative mx-auto w-full min-w-0 max-w-2xl px-4 text-center sm:px-6">
