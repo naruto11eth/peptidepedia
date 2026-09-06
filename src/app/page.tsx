@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { EvidenceBadge } from "@/components/evidence-badge";
 import { EvidenceRack } from "@/components/evidence-rack";
+import { HeroVideo } from "@/components/hero-video";
 import { getRepository } from "@/lib/repository";
 import { EVIDENCE_TIER_META } from "@/lib/schema";
 
@@ -44,32 +45,39 @@ export default async function HomePage() {
 
   return (
     <>
-      <section className="mx-auto max-w-6xl px-4 sm:px-6 pt-14 sm:pt-20">
-        <p className="label-xs mb-6">{compounds.length} compounds · every claim cited</p>
-        <h1 className="display text-[2.75rem] sm:text-7xl max-w-4xl text-[var(--color-powder)]">
-          Most of what you have read
-          <br />
-          about peptides is{" "}
-          <span className="text-[var(--color-accent)]">selling you something</span>.
-        </h1>
-        <p className="mt-7 text-lg text-[var(--text-muted)] max-w-xl leading-relaxed">
-          This is the other kind of page. Every entry is graded on how much human evidence actually
-          exists.
-        </p>
+      {/*
+        The clip is composed around an empty, near-black centre, so the hero
+        type sits inside the ring rather than beside it. Height is tied to the
+        16:9 source so the hole stays centred as the viewport widens.
+      */}
+      <section className="relative isolate flex min-h-[clamp(32rem,56vw,48rem)] items-center justify-center overflow-hidden">
+        <HeroVideo />
 
-        <div className="mt-9 flex flex-wrap gap-3">
-          <Link
-            href="/compounds"
-            className="px-5 py-2.5 rounded-lg bg-[var(--color-accent)] text-[var(--accent-on)] font-medium text-sm hover:bg-[var(--color-accent-dim)] transition-colors"
-          >
-            Browse compounds
-          </Link>
-          <Link
-            href="/methodology"
-            className="px-5 py-2.5 rounded-lg border text-sm hover:border-[var(--border-strong)] transition-colors"
-          >
-            How the grading works
-          </Link>
+        <div className="relative mx-auto w-full min-w-0 max-w-2xl px-4 text-center sm:px-6">
+          <p className="label-xs mb-6">{compounds.length} compounds · every claim cited</p>
+          <h1 className="display text-[2.25rem] text-[var(--color-powder)] sm:text-5xl lg:text-6xl">
+            Most of what you have read about peptides is{" "}
+            <span className="text-[var(--color-accent)]">selling you something</span>.
+          </h1>
+          <p className="mx-auto mt-6 max-w-md text-[var(--text-muted)] leading-relaxed">
+            This is the other kind of page. Every entry is graded on how much human evidence
+            actually exists.
+          </p>
+
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Link
+              href="/compounds"
+              className="rounded-lg bg-[var(--color-accent)] px-5 py-2.5 text-sm font-medium text-[var(--accent-on)] transition-colors hover:bg-[var(--color-accent-dim)]"
+            >
+              Browse compounds
+            </Link>
+            <Link
+              href="/methodology"
+              className="rounded-lg border border-[var(--border-strong)] bg-[color-mix(in_oklab,var(--bg)_55%,transparent)] px-5 py-2.5 text-sm backdrop-blur-sm transition-colors hover:border-[var(--text-faint)]"
+            >
+              How the grading works
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -78,7 +86,7 @@ export default async function HomePage() {
         row is the finding: a handful of full vials, then a long tail of nearly
         empty ones.
       */}
-      <section className="mx-auto max-w-6xl px-4 sm:px-6 mt-10 sm:mt-12">
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 mt-14 sm:mt-16">
         <EvidenceRack compounds={compounds} />
         <div className="mt-4 flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2">
           <p className="text-sm text-[var(--text-muted)] max-w-lg leading-relaxed">
