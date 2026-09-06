@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { EvidenceBadge } from "@/components/evidence-badge";
-import { PageHeader } from "@/components/page-header";
+import { ArticleLayout, type ArticleSection } from "@/components/article-layout";
 import { EVIDENCE_TIERS, EVIDENCE_TIER_META } from "@/lib/schema";
 
 export const metadata: Metadata = {
@@ -9,17 +9,22 @@ export const metadata: Metadata = {
   description: "How evidence tiers are assigned, where dosing figures come from, and what this site refuses to do.",
 };
 
+const SECTIONS: readonly ArticleSection[] = [
+  { id: "tier-describes-the-use", label: "The tier describes the use" },
+  { id: "where-doses-come-from", label: "Where dosing figures come from" },
+  { id: "what-this-site-will-not-do", label: "What this site will not do" },
+  { id: "corrections", label: "Corrections" },
+];
+
 export default function MethodologyPage() {
   return (
-    <div className="mx-auto max-w-6xl px-4 sm:px-6 py-12 sm:py-16">
-      <PageHeader
-        eyebrow="About"
-        title="Methodology"
-        description="How to read this site, and what its labels mean."
-      />
-
-      <div className="max-w-2xl space-y-10">
-        <section className="space-y-3">
+    <ArticleLayout
+      eyebrow="About"
+      title="Methodology"
+      description="How to read this site, and what its labels mean."
+      sections={SECTIONS}
+    >
+      <section className="not-prose mb-10 grid gap-3 sm:grid-cols-2">
           {EVIDENCE_TIERS.map((tier) => {
             const meta = EVIDENCE_TIER_META[tier];
             return (
@@ -31,10 +36,8 @@ export default function MethodologyPage() {
               </div>
             );
           })}
-        </section>
-
-        <div className="prose-doc">
-          <h2>The tier describes the use, not the molecule</h2>
+      </section>
+          <h2 id="tier-describes-the-use">The tier describes the use, not the molecule</h2>
           <p>
             This is the distinction that makes the tiers useful rather than decorative. A compound is
             rated on the evidence for <em>what people take it for</em>, not on whether any research
@@ -49,7 +52,7 @@ export default function MethodologyPage() {
             readers arrive at its page, and the page says so.
           </p>
 
-          <h2>Where dosing figures come from</h2>
+          <h2 id="where-doses-come-from">Where dosing figures come from</h2>
           <p>
             Every dose on this site is labelled by origin, and the two categories are not
             interchangeable:
@@ -71,7 +74,7 @@ export default function MethodologyPage() {
             the same sentence as the number rather than in a footnote.
           </p>
 
-          <h2>What this site will not do</h2>
+          <h2 id="what-this-site-will-not-do">What this site will not do</h2>
           <ul>
             <li>
               <strong>Recommend vendors.</strong> Any list would be stale within months, and a
@@ -96,15 +99,13 @@ export default function MethodologyPage() {
             </li>
           </ul>
 
-          <h2>Corrections</h2>
+          <h2 id="corrections">Corrections</h2>
           <p>
             Every compound page carries a last-reviewed date. Trials read out, approvals land, and
             bulk-substance lists change - a page that has not been touched in a year should be treated
             as a year old. If something here is wrong, it is worth more to this site to fix it than to
             have been right.
           </p>
-        </div>
-      </div>
-    </div>
+    </ArticleLayout>
   );
 }
