@@ -2,19 +2,21 @@ import { ArrowRightIcon } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 
 import { EvidenceBadge } from "@/components/evidence-badge";
+import { EvidenceRack } from "@/components/evidence-rack";
+import { HeroVideo } from "@/components/hero-video";
 import { getRepository } from "@/lib/repository";
-import { EVIDENCE_TIERS, EVIDENCE_TIER_META } from "@/lib/schema";
+import { EVIDENCE_TIER_META } from "@/lib/schema";
 
 const TOOLS = [
   {
     href: "/calculator",
     title: "Reconstitution calculator",
-    body: "Vial size and bacteriostatic water into syringe units, with a live readout and warnings when a dose is too small to measure accurately.",
+    body: "Vial size and bacteriostatic water into syringe units, with warnings when a dose is too small to measure accurately.",
   },
   {
     href: "/compare",
     title: "Side-by-side compare",
-    body: "Up to four compounds against each other on evidence, regulatory status, half-life, cadence, dose and side effects.",
+    body: "Up to four compounds against each other on evidence, regulatory status, half-life, cadence and side effects.",
   },
   {
     href: "/stack",
@@ -26,75 +28,77 @@ const TOOLS = [
 export default async function HomePage() {
   const repo = await getRepository();
   const compounds = await repo.summaries();
-  const [lead, ...rest] = compounds.filter((c) => c.featured);
-
-  const counts = Object.fromEntries(
-    EVIDENCE_TIERS.map((tier) => [tier, compounds.filter((c) => c.evidenceTier === tier).length]),
-  ) as Record<(typeof EVIDENCE_TIERS)[number], number>;
+  /*
+   * The lead card goes to the least-evidenced featured compound rather than
+   * whichever sorts first alphabetically. The gap between how much a compound
+   * is used and how much is known about it is the site's argument, so the entry
+   * that embodies it hardest deserves the largest tile.
+   */
+  const featured = compounds
+    .filter((c) => c.featured)
+    .sort(
+      (a, b) =>
+        EVIDENCE_TIER_META[a.evidenceTier].rank - EVIDENCE_TIER_META[b.evidenceTier].rank ||
+        a.name.localeCompare(b.name),
+    );
 
   return (
     <>
-      <section className="mx-auto max-w-6xl px-4 sm:px-6 pt-16 pb-16 sm:pt-24 sm:pb-20">
-        <p className="label-xs mb-5">
-          {compounds.length} compounds · every claim cited
-        </p>
-        <h1 className="text-4xl sm:text-6xl font-semibold tracking-tighter leading-[1.05] max-w-3xl">
-          What the evidence actually says about peptides.
-        </h1>
-        <p className="mt-6 text-lg text-[var(--text-muted)] max-w-xl leading-relaxed">
-          Most of it is vendor copy in a lab coat. This separates human trials from mouse studies
-          from forum posts.
-        </p>
+      {/*
+        The clip is composed around an empty, near-black centre, so the hero
+        type sits inside the ring rather than beside it. Height is tied to the
+        16:9 source so the hole stays centred as the viewport widens.
+      */}
+      <section className="relative isolate flex min-h-[clamp(32rem,56vw,48rem)] items-center justify-center overflow-hidden py-16 sm:py-20">
+        <HeroVideo />
 
-        <div className="mt-9 flex flex-wrap gap-3">
-          <Link
-            href="/compounds"
-            className="px-5 py-2.5 rounded-lg bg-[var(--color-accent)] text-[var(--accent-on)] font-medium text-sm hover:bg-[var(--color-accent-dim)] transition-colors"
-          >
-            Browse compounds
-          </Link>
-          <Link
-            href="/methodology"
-            className="px-5 py-2.5 rounded-lg border text-sm hover:border-[var(--border-strong)] transition-colors"
-          >
-            How the tiers work
-          </Link>
+        <div className="relative mx-auto w-full min-w-0 max-w-2xl px-4 text-center sm:px-6">
+          <p className="label-xs mb-6">{compounds.length} compounds · every claim cited</p>
+          <h1 className="display text-[2.25rem] text-[var(--color-powder)] sm:text-5xl lg:text-6xl">
+            Most of what you have read about peptides is{" "}
+            <span className="text-[var(--color-accent)]">selling you something</span>.
+          </h1>
+          <p className="mx-auto mt-6 max-w-md text-[var(--text-muted)] leading-relaxed">
+            This is the other kind of page. Every entry is graded on how much human evidence
+            actually exists.
+          </p>
+
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Link
+              href="/compounds"
+              className="rounded-lg bg-[var(--color-accent)] px-5 py-2.5 text-sm font-medium text-[var(--accent-on)] transition-colors hover:bg-[var(--color-accent-dim)]"
+            >
+              Browse compounds
+            </Link>
+            <Link
+              href="/methodology"
+              className="rounded-lg border border-[var(--border-strong)] bg-[color-mix(in_oklab,var(--bg)_55%,transparent)] px-5 py-2.5 text-sm backdrop-blur-sm transition-colors hover:border-[var(--text-faint)]"
+            >
+              How the grading works
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* Legend rather than a card grid: these are one scale, and rendering them
-          as four separate tiles implied four unrelated categories. */}
-      <section className="mx-auto max-w-6xl px-4 sm:px-6 pb-20">
-        <div className="border-t">
-          {EVIDENCE_TIERS.map((tier) => {
-            const meta = EVIDENCE_TIER_META[tier];
-            return (
-              <Link
-                key={tier}
-                href={`/compounds?tier=${tier}`}
-                className="group flex flex-col gap-2 border-b py-5 sm:flex-row sm:items-baseline sm:gap-8"
-              >
-                <span
-                  className="text-3xl font-semibold tabular-nums leading-none w-12 shrink-0"
-                  style={{ color: meta.color }}
-                >
-                  {counts[tier]}
-                </span>
-                <span className="w-36 shrink-0">
-                  <EvidenceBadge tier={tier} size="xs" />
-                </span>
-                <span className="text-sm text-[var(--text-muted)] leading-relaxed max-w-2xl">
-                  {meta.description}
-                </span>
-              </Link>
-            );
-          })}
+      {/*
+        The rack does the arguing. Fill level is evidence, so the shape of the
+        row is the finding: a handful of full vials, then a long tail of nearly
+        empty ones.
+      */}
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 mt-14 sm:mt-16">
+        <EvidenceRack compounds={compounds} />
+        <div className="mt-4 flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2">
+          <p className="text-sm text-[var(--text-muted)] max-w-lg leading-relaxed">
+            Each vial is one compound. How full it is, is how much human evidence exists for the use
+            people take it for. Hover to name one.
+          </p>
+          <p className="label-xs">Strongest to weakest</p>
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 sm:px-6 pb-20">
-        <div className="flex items-baseline justify-between gap-4 mb-5">
-          <h2 className="text-xl font-semibold tracking-tight">Start here</h2>
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 mt-20 sm:mt-24">
+        <div className="flex items-baseline justify-between gap-4 mb-6">
+          <h2 className="display text-2xl">Start here</h2>
           <Link
             href="/compounds"
             className="text-sm text-[var(--text-muted)] hover:text-[var(--text)]"
@@ -103,55 +107,41 @@ export default async function HomePage() {
           </Link>
         </div>
 
-        {/* Asymmetric: the lead compound carries the section, the rest support it.
-            Four equal tiles would read as four equally important entry points. */}
-        <div className="grid gap-3 lg:grid-cols-3">
-          {lead && (
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {featured.map((c) => (
             <Link
-              href={`/compounds/${lead.slug}`}
-              className="surface p-6 lg:row-span-3 flex flex-col gap-4 hover:border-[var(--border-strong)] transition-colors group"
+              key={c.slug}
+              href={`/compounds/${c.slug}`}
+              className="surface group flex min-w-0 flex-col gap-3 p-5 transition-colors hover:border-[var(--border-strong)]"
             >
-              <div className="flex items-start justify-between gap-3">
-                <h3 className="text-2xl font-semibold tracking-tight group-hover:text-[var(--color-accent)] transition-colors">
-                  {lead.name}
+              <div className="flex min-w-0 items-start justify-between gap-2">
+                <h3 className="font-display font-semibold tracking-tight transition-colors group-hover:text-[var(--color-accent)]">
+                  {c.name}
                 </h3>
-                <EvidenceBadge tier={lead.evidenceTier} size="xs" />
+                <EvidenceBadge tier={c.evidenceTier} size="xs" />
               </div>
-              <p className="text-[var(--text-muted)] leading-relaxed">{lead.tagline}</p>
-              <span className="label-xs mt-auto pt-2">{lead.halfLife} half-life</span>
+              <p className="text-sm leading-relaxed text-[var(--text-muted)] line-clamp-5">
+                {c.tagline}
+              </p>
+              <span className="mt-auto space-y-1 pt-2">
+                <span className="label-xs block">Half-life</span>
+                <span className="block font-mono text-xs text-[var(--text-muted)]">
+                  {c.halfLife}
+                </span>
+              </span>
             </Link>
-          )}
-
-          <div className="lg:col-span-2 grid gap-3 sm:grid-cols-3">
-            {rest.map((c) => (
-              <Link
-                key={c.slug}
-                href={`/compounds/${c.slug}`}
-                className="surface p-5 flex flex-col gap-3 hover:border-[var(--border-strong)] transition-colors group"
-              >
-                <div className="flex items-start justify-between gap-2">
-                  <h3 className="font-semibold tracking-tight group-hover:text-[var(--color-accent)] transition-colors">
-                    {c.name}
-                  </h3>
-                  <EvidenceBadge tier={c.evidenceTier} size="xs" />
-                </div>
-                <p className="text-sm text-[var(--text-muted)] leading-relaxed line-clamp-4">
-                  {c.tagline}
-                </p>
-              </Link>
-            ))}
-          </div>
+          ))}
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 sm:px-6 pb-8">
-        <h2 className="text-xl font-semibold tracking-tight mb-5">Tools</h2>
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 mt-20 sm:mt-24 pb-8">
+        <h2 className="display text-2xl mb-6">Tools</h2>
         <div className="border-t">
           {TOOLS.map((tool) => (
             <Link
               key={tool.href}
               href={tool.href}
-              className="group flex items-start gap-5 border-b py-5 hover:bg-[var(--bg-raised)] transition-colors sm:px-2"
+              className="group flex items-start gap-5 border-b py-5 hover:bg-[color-mix(in_oklab,var(--bg-raised)_70%,transparent)] transition-colors sm:px-2"
             >
               <div className="min-w-0 flex-1">
                 <h3 className="font-medium group-hover:text-[var(--color-accent)] transition-colors">

@@ -1,0 +1,5 @@
+# unrs-resolver (a native dep of eslint-config-next) ships a postinstall script.
+# pnpm 11 blocks build scripts by default, `pnpm install` then exits 1, and its
+# pre-run dependency check propagates that failure so `pnpm dev` never starts.
+allowBuilds:
+  unrs-resolver: true

@@ -3,8 +3,8 @@ import Link from "next/link";
 export function SiteFooter() {
   return (
     <footer className="border-t mt-24">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 py-10 space-y-8">
-        <div className="surface p-5 sm:p-6">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 py-14 sm:py-20 space-y-10">
+        <div className="surface px-5 py-8 sm:px-8 sm:py-10">
           <p className="label-xs mb-3">Read this first</p>
           <p className="text-sm leading-relaxed text-[var(--text-muted)]">
             Peptidepedia is a reference, not medical advice, and nothing here is a recommendation to
@@ -20,9 +20,20 @@ export function SiteFooter() {
 
         <div className="flex flex-col sm:flex-row gap-6 sm:items-end sm:justify-between">
           <div className="space-y-1">
-            <p className="font-semibold tracking-tight">Peptidepedia</p>
+            <p className="font-display font-semibold tracking-tight">Peptidepedia</p>
             <p className="text-sm text-[var(--text-faint)]">
               Evidence-tiered. Cited. Updated when the data changes.
+            </p>
+            <p className="pt-2 text-sm text-[var(--text-faint)]">
+              Made with curiosity by{" "}
+              <a
+                href="https://x.com/naruto11eth"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[var(--text-muted)] underline decoration-[color-mix(in_oklab,var(--color-accent)_45%,transparent)] underline-offset-4 transition-colors hover:text-[var(--color-accent)] hover:decoration-[var(--color-accent)]"
+              >
+                naruto11eth
+              </a>
             </p>
           </div>
           <nav className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-[var(--text-muted)]">

@@ -69,7 +69,7 @@ export default async function CompoundPage({ params }: { params: Promise<{ slug:
           <EvidenceBadge tier={compound.evidenceTier} />
           <span className="label-xs">{CLASS_LABELS[compound.class]}</span>
         </div>
-        <h1 className="text-4xl sm:text-5xl font-semibold tracking-tighter">{compound.name}</h1>
+        <h1 className="display text-4xl sm:text-6xl text-[var(--color-powder)]">{compound.name}</h1>
         {compound.aka.length > 0 && (
           <p className="mt-2 font-mono text-sm text-[var(--text-faint)]">
             {compound.aka.join(", ")}

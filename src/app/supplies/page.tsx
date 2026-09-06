@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { PageHeader } from "@/components/page-header";
+import { ArticleLayout, type ArticleSection } from "@/components/article-layout";
 
 export const metadata: Metadata = {
   title: "Supplies",
@@ -9,17 +9,23 @@ export const metadata: Metadata = {
     "Bacteriostatic water, syringes, alcohol pads, sharps disposal and storage - the equipment side, explained once.",
 };
 
+const SECTIONS: readonly ArticleSection[] = [
+  { id: "bacteriostatic-water", label: "Bacteriostatic water" },
+  { id: "syringes", label: "Syringes" },
+  { id: "rest-of-the-kit", label: "The rest of the kit" },
+  { id: "storage", label: "Storage" },
+  { id: "injection-technique", label: "Injection technique" },
+];
+
 export default function SuppliesPage() {
   return (
-    <div className="mx-auto max-w-6xl px-4 sm:px-6 py-12 sm:py-16">
-      <PageHeader
-        eyebrow="Reference"
-        title="Supplies"
-        description="The unglamorous half. Most avoidable problems are equipment and technique problems, not pharmacology problems."
-      />
-
-      <div className="prose-doc max-w-2xl">
-        <h2>Bacteriostatic water - not sterile water</h2>
+    <ArticleLayout
+      eyebrow="Reference"
+      title="Supplies"
+      description={"The unglamorous half. Most avoidable problems are equipment and technique problems, not pharmacology problems."}
+      sections={SECTIONS}
+    >
+        <h2 id="bacteriostatic-water">Bacteriostatic water - not sterile water</h2>
         <p>
           These are different products and the difference matters. <strong>Bacteriostatic water</strong>{" "}
           contains 0.9% benzyl alcohol, a preservative that inhibits bacterial growth, which is what
@@ -37,7 +43,7 @@ export default function SuppliesPage() {
           large-volume administration.
         </p>
 
-        <h2>Syringes</h2>
+        <h2 id="syringes">Syringes</h2>
         <p>
           For subcutaneous peptide injection, insulin syringes with a fixed needle are the standard
           choice - the fixed needle means no dead space, so you are not leaving a measurable fraction
@@ -81,7 +87,7 @@ export default function SuppliesPage() {
           insertion; a second use is measurably blunter and drags tissue. They cost cents.
         </p>
 
-        <h2>The rest of the kit</h2>
+        <h2 id="rest-of-the-kit">The rest of the kit</h2>
         <ul>
           <li>
             <strong>Alcohol prep pads (70% isopropyl).</strong> Two per injection: one for the vial
@@ -103,7 +109,7 @@ export default function SuppliesPage() {
           </li>
         </ul>
 
-        <h2>Storage, honestly</h2>
+        <h2 id="storage">Storage, honestly</h2>
         <ul>
           <li>
             <strong>Lyophilised powder is robust.</strong> This is why peptides survive shipping
@@ -130,7 +136,7 @@ export default function SuppliesPage() {
           </li>
         </ul>
 
-        <h2>Injection technique, briefly</h2>
+        <h2 id="injection-technique">Injection technique, briefly</h2>
         <ol>
           <li>Wash hands. Swab the vial stopper and let it dry.</li>
           <li>Draw the dose. Tap out air bubbles and expel them - with subcutaneous injection a small bubble is not dangerous, but it displaces volume and costs you dose accuracy.</li>
@@ -162,7 +168,6 @@ export default function SuppliesPage() {
             establishes.
           </p>
         </div>
-      </div>
-    </div>
+    </ArticleLayout>
   );
 }
