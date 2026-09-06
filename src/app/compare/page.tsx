@@ -23,14 +23,25 @@ export default async function ComparePage() {
       />
       <CompoundCompare compounds={compounds} />
 
-      <section className="mt-14 max-w-2xl prose-doc">
+      {/*
+        The table has six columns and was being clipped inside a max-w-2xl
+        column while half the page sat empty. It now takes the wide side of a
+        two-column split, with the commentary beside it.
+      */}
+      <section className="mt-16">
+        <div className="prose-doc max-w-2xl">
         <h2>The GLP class, at matched doses</h2>
         <p>
           The three incretins in this reference are the most frequently compared compounds on the
           site, and the comparison is routinely done badly - usually by putting peak numbers from
           trials of different lengths next to each other.
         </p>
-        <div className="table-scroll">
+        </div>
+
+        {/* Full container width: six columns will not fit in a prose measure,
+            and squeezing them there was clipping the status column. */}
+        <div className="prose-doc mt-6">
+          <div className="table-scroll is-wide">
           <table>
             <thead>
               <tr>
@@ -69,7 +80,10 @@ export default async function ComparePage() {
               </tr>
             </tbody>
           </table>
+          </div>
         </div>
+
+        <div className="prose-doc mt-6 max-w-2xl">
         <p>
           Read the duration column before the weight column. Retatrutide reached the largest number
           in the <em>shortest</em> time, and its phase 2 curve had not flattened at 48 weeks - which
@@ -82,6 +96,7 @@ export default async function ComparePage() {
           grey-market material with no long-term human safety record. The trade is mostly about
           certainty, not potency.
         </p>
+        </div>
       </section>
     </div>
   );

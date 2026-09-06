@@ -28,7 +28,13 @@ export default async function CalculatorPage({
       />
       <ReconstitutionCalculator compounds={compounds} initialSlug={compound} />
 
-      <section className="mt-14 max-w-2xl prose-doc">
+      {/*
+        Two short explainers, previously stacked in a narrow left column with
+        the right half of the page empty. Side by side they fill the width and
+        stay readable.
+      */}
+      <section className="mt-16 grid gap-x-12 gap-y-4 lg:grid-cols-2">
+        <div className="prose-doc min-w-0">
         <h2>How the maths works</h2>
         <p>
           Reconstitution is one division and one multiplication. The vial contains a fixed mass of
@@ -48,6 +54,9 @@ export default async function CalculatorPage({
           is why &ldquo;how many mg did I inject&rdquo; and &ldquo;how many units did I draw&rdquo;
           are only the same question once you know the concentration.
         </p>
+        </div>
+
+        <div className="prose-doc min-w-0">
         <h2>What it cannot do</h2>
         <p>
           This calculator assumes the vial contains what the label says. For unregulated material
@@ -56,6 +65,7 @@ export default async function CalculatorPage({
           <a href="/safety">safety and sourcing</a> for what independent testing does and does not
           establish.
         </p>
+        </div>
       </section>
     </div>
   );
