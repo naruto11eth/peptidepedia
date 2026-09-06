@@ -55,13 +55,15 @@ export function HeroVideo() {
             "radial-gradient(closest-side at 50% 48%, rgb(5 7 12 / 0.92) 0%, rgb(5 7 12 / 0.78) 42%, rgb(5 7 12 / 0.25) 72%, transparent 100%)",
         }}
       />
-      {/* Blend the frame edges into the page so it reads as lighting, not as a
-          video element bolted onto the top of the document. */}
+      {/* Feather the frame edges. This fades to the clip's own black rather
+          than to the page background: in dark mode they match, and in light
+          mode it keeps the hero a deliberate dark panel instead of a dark
+          rectangle sitting in a white halo. */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(to bottom, var(--bg) 0%, transparent 18%, transparent 62%, var(--bg) 100%), linear-gradient(to right, var(--bg) 0%, transparent 14%, transparent 86%, var(--bg) 100%)",
+            "linear-gradient(to bottom, var(--hero-edge) 0%, transparent 18%, transparent 62%, var(--hero-edge) 100%), linear-gradient(to right, var(--hero-edge) 0%, transparent 14%, transparent 86%, var(--hero-edge) 100%)",
         }}
       />
     </div>

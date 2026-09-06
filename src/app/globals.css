@@ -77,6 +77,7 @@
   --text-muted: var(--color-ink-300);
   --text-faint: var(--color-ink-400);
   --accent-on: var(--color-ink-950);
+  --hero-edge: #05070c;
   /* The lamp. Light mode replaces this with `none`. */
   --lamp:
     radial-gradient(
@@ -107,6 +108,8 @@
     --color-tier-preclinical: var(--l-tier-preclinical);
     --color-tier-anecdotal: var(--l-tier-anecdotal);
     --accent-on: #ffffff;
+    --hero-edge: #05070c;
+    --color-amber-deep: #8a5510;
     --lamp: none;
     color-scheme: light;
   }
@@ -128,6 +131,8 @@
   --color-tier-preclinical: var(--l-tier-preclinical);
   --color-tier-anecdotal: var(--l-tier-anecdotal);
   --accent-on: #ffffff;
+  --hero-edge: #05070c;
+  --color-amber-deep: #8a5510;
   --lamp: none;
   color-scheme: light;
 }
@@ -222,6 +227,10 @@ body {
 }
 .prose-doc p {
   margin: 1rem 0;
+}
+/* Escape hatch for component blocks embedded in prose (cards, callouts). */
+.prose-doc .not-prose p {
+  margin: 0;
 }
 .prose-doc ul,
 .prose-doc ol {
