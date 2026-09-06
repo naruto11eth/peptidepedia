@@ -23,8 +23,19 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
+/*
+ * Canonical and OG URLs need a real origin. Vercel injects its production
+ * domain, so this resolves correctly on deploy without anyone remembering to
+ * set it, and falls back to localhost in development.
+ */
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : "http://localhost:3000");
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://peptidepedia.example"),
+  metadataBase: new URL(siteUrl),
   title: {
     default: "Peptidepedia - an evidence-tiered reference for peptides",
     template: "%s · Peptidepedia",
