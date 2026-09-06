@@ -8,6 +8,7 @@ import { useState } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 const NAV = [
+  { href: "/", label: "Home" },
   { href: "/compounds", label: "Compounds" },
   { href: "/compare", label: "Compare" },
   { href: "/calculator", label: "Calculator" },
@@ -33,7 +34,10 @@ export function SiteHeader() {
 
           <nav className="hidden md:flex items-center gap-1 ml-auto mr-1">
             {NAV.map((item) => {
-              const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
+              const active =
+                item.href === "/"
+                  ? pathname === "/"
+                  : pathname === item.href || pathname.startsWith(`${item.href}/`);
               return (
                 <Link
                   key={item.href}
