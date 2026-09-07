@@ -1,0 +1,4 @@
+# Raw design sources; the optimised copies in public/ are what ship.
+assets-src/
+.agents/
+.claude/
