@@ -14,3 +14,4 @@ skills-lock.json
 
 # Raw video/design sources (optimised copies live in public/)
 assets-src/
+.vercel
