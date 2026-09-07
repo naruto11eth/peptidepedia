@@ -139,6 +139,15 @@ export function StackBuilder({
           ))}
         </div>
 
+        {suggestions.length === 0 && (
+          <div className="surface p-8 text-center">
+            <p className="text-sm text-[var(--text-muted)]">
+              {goals.size === 0
+                ? "Pick one or more goals above to see what this reference documents for them."
+                : "Nothing left to add for those goals - everything documented is already in your stack."}
+            </p>
+          </div>
+        )}
       </section>
 
       <section className="space-y-4">
