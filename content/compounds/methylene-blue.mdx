@@ -1,0 +1,68 @@
+---
+name: Methylene blue
+aka: ["Methylthioninium chloride", "ProvayBlue", "MB"]
+tagline: A 19th century dye that became the first synthetic drug, is still the antidote for methaemoglobinaemia, and is a potent MAO inhibitor that people take with antidepressants without knowing it.
+class: mitochondrial
+evidenceTier: approved
+regulatoryStatus: FDA-approved as ProvayBlue for acquired methaemoglobinaemia, given intravenously in hospital. Oral and low-dose use for cognition or energy is off-label and unapproved, and the pharmaceutical and laboratory grades are different products.
+goals: ["cognition", "longevity"]
+routes: ["oral"]
+cadence: daily
+cadenceNote: The approved use is a single weight-based intravenous dose in an emergency. Low-dose oral use is a daily convention with no established regimen.
+halfLife: "About 5 to 6 hours"
+reportedDose:
+  low: 0.5
+  high: 4
+  unit: mg
+  note: Reported practice for low-dose oral use, often expressed per kilogram. The approved intravenous antidote dose is 1 to 2 mg/kg, far higher, and given once.
+storage: Room temperature, protected from light.
+sideEffects:
+  - "Blue or green discolouration of urine, which is universal and harmless"
+  - "Blue staining of the mouth and tongue"
+  - "Nausea and abdominal pain"
+  - "Headache"
+  - "Hypertension at higher doses"
+redFlags:
+  - "Any serotonergic medication, including SSRIs, SNRIs, MAO inhibitors, triptans and tramadol. Methylene blue is a potent MAO-A inhibitor and the combination has caused fatal serotonin toxicity"
+  - "G6PD deficiency, in which methylene blue can cause severe haemolysis. This is the reason it is not given empirically"
+  - "Agitation, confusion, tremor, fever or muscle rigidity, which is how serotonin toxicity presents"
+  - "Pregnancy, where it has been associated with fetal harm"
+pairsWith: []
+cautionWith: ["semax", "selank", "noopept"]
+subreddits: ["Biohackers", "Nootropics"]
+citations:
+  - label: "FDA prescribing information, methylene blue injection"
+    url: "https://www.accessdata.fda.gov/drugsatfda_docs/label/2024/204630s021lbl.pdf"
+    kind: regulatory
+  - label: "Methylene blue and serotonin toxicity: inhibition of monoamine oxidase A confirms a theoretical prediction"
+    url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC2078225/"
+    kind: trial
+updated: "2026-09-07"
+featured: false
+---
+
+## What it is
+
+Methylene blue was synthesised as a textile dye in 1876 and became, arguably, the first fully synthetic pharmaceutical. It is still the standard treatment for acquired methaemoglobinaemia, where it reduces ferric iron in haemoglobin back to the ferrous form that can carry oxygen.
+
+Its interest to biohackers is separate. At low concentrations it can act as an alternative electron carrier in the mitochondrial electron transport chain, accepting electrons and delivering them to cytochrome c, which is the basis for claims about cellular energy and cognition.
+
+## The interaction that makes this dangerous
+
+Methylene blue is a potent inhibitor of monoamine oxidase A. This is not a minor pharmacological footnote, and it is the single most important thing to know about the compound.
+
+Combining an MAO inhibitor with a serotonergic drug can produce serotonin toxicity. Cases arising from methylene blue given during surgery to patients taking SSRIs are well documented, and some have been fatal. The FDA advises that if intravenous use cannot be avoided in someone on serotonergic medication, the lowest possible dose should be used with close observation for central nervous system effects, and that serotonergic drugs should not be taken within 72 hours of the last methylene blue dose.
+
+A large share of adults are on an SSRI, an SNRI, a triptan or tramadol. Methylene blue is bought online as a wellness product by people who will not connect a blue dye to their antidepressant, and no vendor label explains this adequately.
+
+## The dose-response runs backwards
+
+Methylene blue is hormetic. At low concentrations it accepts electrons and supports mitochondrial respiration. At higher concentrations the same redox chemistry reverses and it generates oxidative stress and, at sufficient dose, causes the methaemoglobinaemia it is used to treat.
+
+More is not merely unhelpful, it is directionally harmful, and the window between the two behaviours is not well characterised for chronic oral use.
+
+## Practical notes
+
+- **Grade matters more than usual.** Laboratory and aquarium grade methylene blue is not manufactured to pharmaceutical purity and may carry heavy metal contamination. USP grade is a different product at a different price.
+- **G6PD deficiency is a genuine contraindication.** In that population methylene blue can cause severe haemolysis, which is why it is not given without consideration in emergency settings either.
+- **The cognitive evidence is thin.** Small human studies using imaging and memory endpoints exist and are preliminary. The approved indication is an emergency antidote, and nothing about that approval supports daily use.
