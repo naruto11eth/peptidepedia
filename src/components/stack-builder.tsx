@@ -112,12 +112,12 @@ export function StackBuilder({
         </div>
       </section>
 
-      {suggestions.length > 0 && (
-        <section className="space-y-3">
-          <p className="label-xs">2 · Documented for those goals</p>
-          <div className="grid gap-2 sm:grid-cols-2">
-            {suggestions.map((c) => (
-              <button
+      {/* Rendered unconditionally: hiding it made the steps read 1 then 3. */}
+      <section className="space-y-3">
+        <p className="label-xs">2 · Documented for those goals</p>
+        <div className="grid gap-2 sm:grid-cols-2">
+          {suggestions.map((c) => (
+            <button
                 key={c.slug}
                 type="button"
                 onClick={() => setSelected([...selected, c.slug])}
@@ -136,10 +136,10 @@ export function StackBuilder({
                   </span>
                 </span>
               </button>
-            ))}
-          </div>
-        </section>
-      )}
+          ))}
+        </div>
+
+      </section>
 
       <section className="space-y-4">
         <div className="flex items-center justify-between gap-4">
