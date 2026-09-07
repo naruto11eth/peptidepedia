@@ -255,6 +255,10 @@ body {
   font-size: 0.875rem;
   min-width: 34rem;
 }
+/* Tables given the full container width do not need the prose min-width floor. */
+.prose-doc .table-scroll.is-wide table {
+  min-width: 0;
+}
 .prose-doc thead {
   background: var(--bg-raised);
 }
