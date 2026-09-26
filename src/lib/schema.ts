@@ -95,6 +95,7 @@ export const CLASSES = [
   "longevity",
   "growth-factor",
   "metabolic",
+  "neuropeptide",
 ] as const;
 export type CompoundClass = (typeof CLASSES)[number];
 
@@ -113,6 +114,7 @@ export const CLASS_LABELS: Record<CompoundClass, string> = {
   longevity: "Longevity",
   "growth-factor": "Growth factor",
   metabolic: "Metabolic",
+  neuropeptide: "Neuropeptide",
 };
 
 export const ROUTES = ["subcutaneous", "intramuscular", "oral", "topical", "intranasal"] as const;
