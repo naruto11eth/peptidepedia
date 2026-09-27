@@ -61,6 +61,7 @@ export const GOALS = [
   "cognition",
   "endurance",
   "immunity",
+  "bone",
 ] as const;
 export type Goal = (typeof GOALS)[number];
 
@@ -78,6 +79,7 @@ export const GOAL_LABELS: Record<Goal, string> = {
   cognition: "Cognition",
   endurance: "Endurance",
   immunity: "Immunity",
+  bone: "Bone",
 };
 
 export const CLASSES = [
@@ -93,6 +95,9 @@ export const CLASSES = [
   "nootropic",
   "immune",
   "longevity",
+  "growth-factor",
+  "metabolic",
+  "neuropeptide",
 ] as const;
 export type CompoundClass = (typeof CLASSES)[number];
 
@@ -109,6 +114,9 @@ export const CLASS_LABELS: Record<CompoundClass, string> = {
   nootropic: "Nootropic",
   immune: "Immune modulator",
   longevity: "Longevity",
+  "growth-factor": "Growth factor",
+  metabolic: "Metabolic",
+  neuropeptide: "Neuropeptide",
 };
 
 export const ROUTES = ["subcutaneous", "intramuscular", "oral", "topical", "intranasal"] as const;
