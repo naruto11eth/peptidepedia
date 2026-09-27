@@ -61,6 +61,7 @@ export const GOALS = [
   "cognition",
   "endurance",
   "immunity",
+  "bone",
 ] as const;
 export type Goal = (typeof GOALS)[number];
 
@@ -78,6 +79,7 @@ export const GOAL_LABELS: Record<Goal, string> = {
   cognition: "Cognition",
   endurance: "Endurance",
   immunity: "Immunity",
+  bone: "Bone",
 };
 
 export const CLASSES = [
