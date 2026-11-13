@@ -25,31 +25,24 @@ const BODY_TOP = 30;
 const BODY_BOTTOM = 102;
 const BODY_HEIGHT = BODY_BOTTOM - BODY_TOP;
 
-export function Vial({
-  id,
-  level,
-  label,
-  className,
-  style,
-}: {
-  /** Must be unique per page: SVG gradient ids are global. */
-  id: string;
-  level: number;
-  /** Short code printed on the vial's paper label. */
-  label?: string;
-  className?: string;
-  style?: React.CSSProperties;
-}) {
-  const clamped = Math.max(0, Math.min(1, level));
-  const fillHeight = BODY_HEIGHT * clamped;
-  const fillY = BODY_BOTTOM - fillHeight;
+/*
+ * Every vial shares one set of gradients and one clip path: none of them vary
+ * with fill level, only the height of the fill rect does. Rendering them per
+ * vial duplicated four <defs> blocks 80 times and was most of the homepage's
+ * 853 KB. They are emitted once by <VialDefs /> and referenced by id.
+ */
+const GLASS = "vial-glass";
+const CONTENTS = "vial-contents";
+const CAP = "vial-cap";
+const INNER = "vial-inner";
 
+export function VialDefs(): React.ReactElement {
   return (
-    <svg viewBox="0 0 48 108" className={className} style={style} role="presentation" aria-hidden>
+    <svg width="0" height="0" className="absolute" aria-hidden focusable="false">
       <defs>
         {/* Empty glass stays near-transparent so the vial reads as glass with
             nothing in it, rather than as dark liquid. */}
-        <linearGradient id={`${id}-glass`} x1="0" y1="0" x2="1" y2="0">
+        <linearGradient id={GLASS} x1="0" y1="0" x2="1" y2="0">
           <stop offset="0%" stopColor="var(--color-amber-deep)" stopOpacity="0.16" />
           <stop offset="20%" stopColor="var(--color-amber-lit)" stopOpacity="0.07" />
           <stop offset="52%" stopColor="var(--color-amber)" stopOpacity="0.04" />
@@ -57,14 +50,14 @@ export function Vial({
           <stop offset="100%" stopColor="var(--color-amber-deep)" stopOpacity="0.22" />
         </linearGradient>
 
-        <linearGradient id={`${id}-contents`} x1="0" y1="0" x2="1" y2="0">
+        <linearGradient id={CONTENTS} x1="0" y1="0" x2="1" y2="0">
           <stop offset="0%" stopColor="var(--color-amber-deep)" />
           <stop offset="26%" stopColor="var(--color-amber-lit)" />
           <stop offset="58%" stopColor="var(--color-amber)" />
           <stop offset="100%" stopColor="var(--color-amber-deep)" />
         </linearGradient>
 
-        <linearGradient id={`${id}-cap`} x1="0" y1="0" x2="1" y2="0">
+        <linearGradient id={CAP} x1="0" y1="0" x2="1" y2="0">
           <stop offset="0%" stopColor="#4e5866" />
           <stop offset="26%" stopColor="#ccd4de" />
           <stop offset="52%" stopColor="#93a0b0" />
@@ -72,21 +65,36 @@ export function Vial({
           <stop offset="100%" stopColor="#404955" />
         </linearGradient>
 
-        <clipPath id={`${id}-inner`}>
-          <rect
-            x={BODY_X + 2}
-            y={BODY_TOP}
-            width={BODY_W - 4}
-            height={BODY_HEIGHT}
-            rx="2"
-          />
+        <clipPath id={INNER}>
+          <rect x={BODY_X + 2} y={BODY_TOP} width={BODY_W - 4} height={BODY_HEIGHT} rx="2" />
         </clipPath>
       </defs>
+    </svg>
+  );
+}
 
+export function Vial({
+  level,
+  label,
+  className,
+  style,
+}: {
+  level: number;
+  /** Short code printed on the vial's paper label. */
+  label?: string;
+  className?: string;
+  style?: React.CSSProperties;
+}): React.ReactElement {
+  const clamped = Math.max(0, Math.min(1, level));
+  const fillHeight = BODY_HEIGHT * clamped;
+  const fillY = BODY_BOTTOM - fillHeight;
+
+  return (
+    <svg viewBox="0 0 48 108" className={className} style={style} role="presentation" aria-hidden>
       {/* Neck and shoulder */}
       <path
         d={`M17 16 h14 v6 l${(BODY_W - 14) / 2} 8 v2 H${BODY_X} v-2 l${(BODY_W - 14) / 2} -8 z`}
-        fill={`url(#${id}-glass)`}
+        fill={`url(#${GLASS})`}
         stroke="var(--color-amber-deep)"
         strokeOpacity="0.35"
         strokeWidth="0.6"
@@ -98,7 +106,7 @@ export function Vial({
         not a lid resting on top. A shallow cap was the main reason this read as
         a bottle rather than a vial.
       */}
-      <rect x="11" y="2" width="26" height="16" rx="1.5" fill={`url(#${id}-cap)`} />
+      <rect x="11" y="2" width="26" height="16" rx="1.5" fill={`url(#${CAP})`} />
       <rect x="11" y="13.6" width="26" height="0.8" fill="#000" opacity="0.28" />
       <rect x="11" y="15.6" width="26" height="0.8" fill="#000" opacity="0.2" />
       {/* Flip-off centre: the detail that makes it read pharmaceutical */}
@@ -112,20 +120,20 @@ export function Vial({
         width={BODY_W}
         height={BODY_HEIGHT + 4}
         rx="3.5"
-        fill={`url(#${id}-glass)`}
+        fill={`url(#${GLASS})`}
         stroke="var(--color-amber-deep)"
         strokeOpacity="0.42"
         strokeWidth="0.7"
       />
 
       {/* Contents. Scales from the base so the load sequence reads as filling. */}
-      <g clipPath={`url(#${id}-inner)`}>
+      <g clipPath={`url(#${INNER})`}>
         <rect
           x={BODY_X + 2}
           y={fillY}
           width={BODY_W - 4}
           height={fillHeight}
-          fill={`url(#${id}-contents)`}
+          fill={`url(#${CONTENTS})`}
           className="vial-fill"
         />
         {clamped > 0.02 && (
