@@ -34,6 +34,12 @@ export default async function HomePage() {
    * is used and how much is known about it is the site's argument, so the entry
    * that embodies it hardest deserves the largest tile.
    */
+  /* Preclinical and anecdotal are exactly the tiers with no completed human RCT
+     for the use the page documents, which is what the rack caption claims. */
+  const untrialled = compounds.filter(
+    (c) => c.evidenceTier === "preclinical" || c.evidenceTier === "anecdotal",
+  ).length;
+
   const featured = compounds
     .filter((c) => c.featured)
     .sort(
@@ -81,16 +87,19 @@ export default async function HomePage() {
       </section>
 
       {/*
-        The rack does the arguing. Fill level is evidence, so the shape of the
-        row is the finding: a handful of full vials, then a long tail of nearly
-        empty ones.
+        The rack does the arguing. One shelf per evidence tier, fill level is
+        evidence, so the depth of each shelf is the finding. The old copy here
+        promised "a long tail of nearly empty vials", which was true of 26
+        compounds and stopped being true at 80; the count below is derived so it
+        cannot drift out of step with the content again.
       */}
       <section className="mx-auto max-w-6xl px-4 sm:px-6 mt-14 sm:mt-16">
         <EvidenceRack compounds={compounds} />
         <div className="mt-4 flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2">
           <p className="text-sm text-[var(--text-muted)] max-w-lg leading-relaxed">
-            Each vial is one compound. How full it is, is how much human evidence exists for the use
-            people take it for. Hover to name one.
+            Each vial is one compound, filled to the strength of human evidence for the use people
+            actually take it for. A sample of the {compounds.length}, of which {untrialled} have no
+            completed human trial behind that use.
           </p>
           <p className="label-xs">Strongest to weakest</p>
         </div>
